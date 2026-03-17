@@ -7,26 +7,26 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		76E05DD42F69C236002B35EC /* Budgeting Apop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Budgeting Apop.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		76E05DD42F69C236002B35EC /* Budgeting App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Budgeting App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		76E05DE62F69C237002B35EC /* Exceptions for "Budgeting Apop" folder in "Budgeting Apop" target */ = {
+		76E05DE62F69C237002B35EC /* Exceptions for "Budgeting App" folder in "Budgeting App" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
 			);
-			target = 76E05DD32F69C236002B35EC /* Budgeting Apop */;
+			target = 76E05DD32F69C236002B35EC /* Budgeting App */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		76E05DD62F69C236002B35EC /* Budgeting Apop */ = {
+		76E05DD62F69C236002B35EC /* Budgeting App */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				76E05DE62F69C237002B35EC /* Exceptions for "Budgeting Apop" folder in "Budgeting Apop" target */,
+				76E05DE62F69C237002B35EC /* Exceptions for "Budgeting App" folder in "Budgeting App" target */,
 			);
-			path = "Budgeting Apop";
+			path = "Budgeting App";
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -45,7 +45,7 @@
 		76E05DCB2F69C235002B35EC = {
 			isa = PBXGroup;
 			children = (
-				76E05DD62F69C236002B35EC /* Budgeting Apop */,
+				76E05DD62F69C236002B35EC /* Budgeting App */,
 				76E05DD52F69C236002B35EC /* Products */,
 			);
 			sourceTree = "<group>";
@@ -53,7 +53,7 @@
 		76E05DD52F69C236002B35EC /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				76E05DD42F69C236002B35EC /* Budgeting Apop.app */,
+				76E05DD42F69C236002B35EC /* Budgeting App.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -61,9 +61,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		76E05DD32F69C236002B35EC /* Budgeting Apop */ = {
+		76E05DD32F69C236002B35EC /* Budgeting App */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 76E05DE72F69C237002B35EC /* Build configuration list for PBXNativeTarget "Budgeting Apop" */;
+			buildConfigurationList = 76E05DE72F69C237002B35EC /* Build configuration list for PBXNativeTarget "Budgeting App" */;
 			buildPhases = (
 				76E05DD02F69C236002B35EC /* Sources */,
 				76E05DD12F69C236002B35EC /* Frameworks */,
@@ -74,13 +74,13 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				76E05DD62F69C236002B35EC /* Budgeting Apop */,
+				76E05DD62F69C236002B35EC /* Budgeting App */,
 			);
-			name = "Budgeting Apop";
+			name = "Budgeting App";
 			packageProductDependencies = (
 			);
 			productName = "Budgeting Apop";
-			productReference = 76E05DD42F69C236002B35EC /* Budgeting Apop.app */;
+			productReference = 76E05DD42F69C236002B35EC /* Budgeting App.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -98,7 +98,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 76E05DCF2F69C235002B35EC /* Build configuration list for PBXProject "Budgeting Apop" */;
+			buildConfigurationList = 76E05DCF2F69C235002B35EC /* Build configuration list for PBXProject "Budgeting App" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -112,7 +112,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				76E05DD32F69C236002B35EC /* Budgeting Apop */,
+				76E05DD32F69C236002B35EC /* Budgeting App */,
 			);
 		};
 /* End PBXProject section */
@@ -322,7 +322,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		76E05DCF2F69C235002B35EC /* Build configuration list for PBXProject "Budgeting Apop" */ = {
+		76E05DCF2F69C235002B35EC /* Build configuration list for PBXProject "Budgeting App" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				76E05DEA2F69C237002B35EC /* Debug */,
@@ -331,7 +331,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		76E05DE72F69C237002B35EC /* Build configuration list for PBXNativeTarget "Budgeting Apop" */ = {
+		76E05DE72F69C237002B35EC /* Build configuration list for PBXNativeTarget "Budgeting App" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				76E05DE82F69C237002B35EC /* Debug */,
