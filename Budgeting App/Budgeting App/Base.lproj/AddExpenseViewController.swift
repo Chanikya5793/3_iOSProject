@@ -9,21 +9,35 @@ import UIKit
 
 class AddExpenseViewController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
+    @IBOutlet weak var typeSegment: UISegmentedControl!
+    
+    @IBOutlet weak var amountField: UITextField!
+    
+    @IBOutlet weak var categoryField: UITextField!
+    
+    @IBOutlet weak var dateField: UITextField!
+    
+    @IBOutlet weak var notesField: UITextField!
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override func viewDidLoad() {
+        super.viewDidLoad()
     }
-    */
 
+    @IBAction func saveTapped(_ sender: UIBarButtonItem) {
+        
+        let type = typeSegment.selectedSegmentIndex == 0 ? "Expense" : "Income"
+        let amount = amountField.text ?? ""
+        let category = categoryField.text ?? ""
+        let date = dateField.text ?? ""
+        let notes = notesField.text ?? ""
+        
+        print("Type: \(type)")
+        print("Amount: \(amount)")
+        print("Category: \(category)")
+        print("Date: \(date)")
+        print("Notes: \(notes)")
+        
+        navigationController?.popViewController(animated: true)
+    }
 }
