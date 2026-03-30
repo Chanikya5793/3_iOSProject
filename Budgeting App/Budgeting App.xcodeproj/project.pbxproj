@@ -7,24 +7,24 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		76E05DD42F69C236002B35EC /* Budgeting App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Budgeting App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		76DBCF602F7AEAD600F17C86 /* Budgeting App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Budgeting App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		76E05DE62F69C237002B35EC /* Exceptions for "Budgeting App" folder in "Budgeting App" target */ = {
+		76DBCF722F7AEAD700F17C86 /* Exceptions for "Budgeting App" folder in "Budgeting App" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
 			);
-			target = 76E05DD32F69C236002B35EC /* Budgeting App */;
+			target = 76DBCF5F2F7AEAD600F17C86 /* Budgeting App */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		76E05DD62F69C236002B35EC /* Budgeting App */ = {
+		76DBCF622F7AEAD600F17C86 /* Budgeting App */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				76E05DE62F69C237002B35EC /* Exceptions for "Budgeting App" folder in "Budgeting App" target */,
+				76DBCF722F7AEAD700F17C86 /* Exceptions for "Budgeting App" folder in "Budgeting App" target */,
 			);
 			path = "Budgeting App";
 			sourceTree = "<group>";
@@ -32,7 +32,7 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		76E05DD12F69C236002B35EC /* Frameworks */ = {
+		76DBCF5D2F7AEAD600F17C86 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -42,18 +42,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		76E05DCB2F69C235002B35EC = {
+		76DBCF572F7AEAD600F17C86 = {
 			isa = PBXGroup;
 			children = (
-				76E05DD62F69C236002B35EC /* Budgeting App */,
-				76E05DD52F69C236002B35EC /* Products */,
+				76DBCF622F7AEAD600F17C86 /* Budgeting App */,
+				76DBCF612F7AEAD600F17C86 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		76E05DD52F69C236002B35EC /* Products */ = {
+		76DBCF612F7AEAD600F17C86 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				76E05DD42F69C236002B35EC /* Budgeting App.app */,
+				76DBCF602F7AEAD600F17C86 /* Budgeting App.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -61,64 +61,64 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		76E05DD32F69C236002B35EC /* Budgeting App */ = {
+		76DBCF5F2F7AEAD600F17C86 /* Budgeting App */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 76E05DE72F69C237002B35EC /* Build configuration list for PBXNativeTarget "Budgeting App" */;
+			buildConfigurationList = 76DBCF732F7AEAD700F17C86 /* Build configuration list for PBXNativeTarget "Budgeting App" */;
 			buildPhases = (
-				76E05DD02F69C236002B35EC /* Sources */,
-				76E05DD12F69C236002B35EC /* Frameworks */,
-				76E05DD22F69C236002B35EC /* Resources */,
+				76DBCF5C2F7AEAD600F17C86 /* Sources */,
+				76DBCF5D2F7AEAD600F17C86 /* Frameworks */,
+				76DBCF5E2F7AEAD600F17C86 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				76E05DD62F69C236002B35EC /* Budgeting App */,
+				76DBCF622F7AEAD600F17C86 /* Budgeting App */,
 			);
 			name = "Budgeting App";
 			packageProductDependencies = (
 			);
-			productName = "Budgeting Apop";
-			productReference = 76E05DD42F69C236002B35EC /* Budgeting App.app */;
+			productName = "Budgeting App";
+			productReference = 76DBCF602F7AEAD600F17C86 /* Budgeting App.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		76E05DCC2F69C235002B35EC /* Project object */ = {
+		76DBCF582F7AEAD600F17C86 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 2630;
-				LastUpgradeCheck = 2630;
+				LastSwiftUpdateCheck = 2640;
+				LastUpgradeCheck = 2640;
 				TargetAttributes = {
-					76E05DD32F69C236002B35EC = {
-						CreatedOnToolsVersion = 26.3;
+					76DBCF5F2F7AEAD600F17C86 = {
+						CreatedOnToolsVersion = 26.4;
 					};
 				};
 			};
-			buildConfigurationList = 76E05DCF2F69C235002B35EC /* Build configuration list for PBXProject "Budgeting App" */;
+			buildConfigurationList = 76DBCF5B2F7AEAD600F17C86 /* Build configuration list for PBXProject "Budgeting App" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
 			);
-			mainGroup = 76E05DCB2F69C235002B35EC;
+			mainGroup = 76DBCF572F7AEAD600F17C86;
 			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 77;
-			productRefGroup = 76E05DD52F69C236002B35EC /* Products */;
+			productRefGroup = 76DBCF612F7AEAD600F17C86 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				76E05DD32F69C236002B35EC /* Budgeting App */,
+				76DBCF5F2F7AEAD600F17C86 /* Budgeting App */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		76E05DD22F69C236002B35EC /* Resources */ = {
+		76DBCF5E2F7AEAD600F17C86 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -128,7 +128,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		76E05DD02F69C236002B35EC /* Sources */ = {
+		76DBCF5C2F7AEAD600F17C86 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -138,7 +138,7 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		76E05DE82F69C237002B35EC /* Debug */ = {
+		76DBCF742F7AEAD700F17C86 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -146,7 +146,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Budgeting Apop/Info.plist";
+				INFOPLIST_FILE = "Budgeting App/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -157,7 +157,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "nwmsu.Budgeting-Apop";
+				PRODUCT_BUNDLE_IDENTIFIER = "nwmsu.Budgeting-App";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -169,7 +169,7 @@
 			};
 			name = Debug;
 		};
-		76E05DE92F69C237002B35EC /* Release */ = {
+		76DBCF752F7AEAD700F17C86 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -177,7 +177,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Budgeting Apop/Info.plist";
+				INFOPLIST_FILE = "Budgeting App/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -188,7 +188,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "nwmsu.Budgeting-Apop";
+				PRODUCT_BUNDLE_IDENTIFIER = "nwmsu.Budgeting-App";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -200,7 +200,7 @@
 			};
 			name = Release;
 		};
-		76E05DEA2F69C237002B35EC /* Debug */ = {
+		76DBCF762F7AEAD700F17C86 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -252,7 +252,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -263,7 +263,7 @@
 			};
 			name = Debug;
 		};
-		76E05DEB2F69C237002B35EC /* Release */ = {
+		76DBCF772F7AEAD700F17C86 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -309,7 +309,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -322,25 +322,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		76E05DCF2F69C235002B35EC /* Build configuration list for PBXProject "Budgeting App" */ = {
+		76DBCF5B2F7AEAD600F17C86 /* Build configuration list for PBXProject "Budgeting App" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				76E05DEA2F69C237002B35EC /* Debug */,
-				76E05DEB2F69C237002B35EC /* Release */,
+				76DBCF762F7AEAD700F17C86 /* Debug */,
+				76DBCF772F7AEAD700F17C86 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		76E05DE72F69C237002B35EC /* Build configuration list for PBXNativeTarget "Budgeting App" */ = {
+		76DBCF732F7AEAD700F17C86 /* Build configuration list for PBXNativeTarget "Budgeting App" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				76E05DE82F69C237002B35EC /* Debug */,
-				76E05DE92F69C237002B35EC /* Release */,
+				76DBCF742F7AEAD700F17C86 /* Debug */,
+				76DBCF752F7AEAD700F17C86 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 76E05DCC2F69C235002B35EC /* Project object */;
+	rootObject = 76DBCF582F7AEAD600F17C86 /* Project object */;
 }

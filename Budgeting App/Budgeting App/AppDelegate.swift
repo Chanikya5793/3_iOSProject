@@ -1,8 +1,8 @@
 //
 //  AppDelegate.swift
-//  Budgeting Apop
+//  Budgeting App
 //
-//  Created by Thotakura Chanakya on 3/17/26.
+//  Created by Thotakura Chanakya on 3/30/26.
 //
 
 import UIKit
