@@ -58,6 +58,7 @@
                                     <color key="baseBackgroundColor" red="0.76862745099999996" green="0.47843137250000001" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 </buttonConfiguration>
                                 <connections>
+                                    <action selector="primaryButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vP8-z9-RBC"/>
                                     <segue destination="0Zc-bM-1Jo" kind="show" identifier="result" id="deh-Ii-O4s"/>
                                 </connections>
                             </button>
@@ -93,6 +94,9 @@
                                 </segments>
                                 <color key="tintColor" red="0.99199999999999999" green="0.95599999999999996" blue="0.91800000000000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <color key="selectedSegmentTintColor" red="0.76862745099999996" green="0.47843137250000001" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <connections>
+                                    <action selector="authModeChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="PJK-2k-aBG"/>
+                                </connections>
                             </segmentedControl>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -107,6 +111,15 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="49v-67-c9s"/>
+                    <connections>
+                        <outlet property="authModeSegmentedControl" destination="VZy-jv-Hkk" id="ofn-fQ-d5w"/>
+                        <outlet property="budgetPromptLabel" destination="pQc-8z-eFd" id="XkM-mQ-4Hp"/>
+                        <outlet property="budgetTextField" destination="y67-ZD-p0U" id="Jzx-pg-kjd"/>
+                        <outlet property="emailTextField" destination="y5W-LE-dy1" id="f5g-cx-eAo"/>
+                        <outlet property="passwordTextField" destination="d8w-RV-5N8" id="NOk-Cd-3dm"/>
+                        <outlet property="primaryButton" destination="Ady-WF-gRd" id="6jh-Iw-TSN"/>
+                        <outlet property="statusLabel" destination="dzo-UV-q9u" id="l1G-zf-Ys8"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -350,7 +363,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Transactions Here" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oor-An-T8N">
-                                <rect key="frame" x="20" y="534" width="353" height="79"/>
+                                <rect key="frame" x="20" y="534" width="353" height="269"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
