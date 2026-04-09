@@ -138,7 +138,7 @@
         <!--Dashboard-->
         <scene sceneID="ODo-Vq-fo2">
             <objects>
-                <viewController storyboardIdentifier="result" id="xHo-D9-c3k" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="result" id="xHo-D9-c3k" customClass="DashboardViewController" customModule="Budgeting_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="c0X-rJ-Fqc">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
