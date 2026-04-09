@@ -162,7 +162,7 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gXf-hA-Y1Z">
                                         <rect key="frame" x="0.0" y="0.0" width="353" height="100"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="60%" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aBG-8C-Kfd">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="60%" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="aBG-8C-Kfd">
                                                 <rect key="frame" x="0.0" y="0.0" width="172" height="100"/>
                                                 <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="72"/>
                                                 <nil key="textColor"/>
@@ -171,7 +171,7 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="waN-TF-lFW">
                                                 <rect key="frame" x="172" y="0.0" width="181" height="100"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="of Budget Spent" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T5u-8g-Rqa">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="of Budget Spent" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="T5u-8g-Rqa">
                                                         <rect key="frame" x="0.0" y="0.0" width="181" height="50"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="50" id="wlp-Jn-9fy"/>
@@ -481,6 +481,9 @@
                                 <color key="tintColor" red="0.76862745099999996" green="0.47843137250000001" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Done"/>
+                                <connections>
+                                    <action selector="saveTapped:" destination="txe-uv-r8A" eventType="touchUpInside" id="jPq-yE-o7r"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="C3n-5c-kJ2"/>
@@ -525,6 +528,7 @@
                         <outlet property="amountField" destination="9Zg-gz-RGO" id="VBl-dv-wFn"/>
                         <outlet property="categoryBTN" destination="dhr-HT-80q" id="hdw-A0-kFe"/>
                         <outlet property="datePicker" destination="T0S-Fh-DKS" id="1V0-xo-GBo"/>
+                        <outlet property="doneButton" destination="qOo-SN-ueh" id="8uX-5X-xFG"/>
                         <outlet property="notesField" destination="shx-np-LiK" id="m9E-aY-HrL"/>
                         <outlet property="typeSegment" destination="g9P-BB-xlA" id="ptc-2q-MC1"/>
                     </connections>

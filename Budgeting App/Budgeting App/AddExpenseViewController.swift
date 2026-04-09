@@ -19,6 +19,7 @@ class AddExpenseViewController: UIViewController {
     
     @IBOutlet weak var notesField: UITextField!
     @IBOutlet weak var categoryBTN: UIButton!
+    @IBOutlet weak var doneButton: UIButton!
 
     private enum EntryType: String {
         case expense
@@ -152,6 +153,7 @@ class AddExpenseViewController: UIViewController {
         categoryBTN.isEnabled = !saving
         datePicker.isEnabled = !saving
         notesField.isEnabled = !saving
+        doneButton.isEnabled = !saving
         navigationItem.rightBarButtonItem?.isEnabled = !saving
     }
 
