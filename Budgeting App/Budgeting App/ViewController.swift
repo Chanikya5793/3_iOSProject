@@ -195,7 +195,17 @@ class ViewController: UIViewController {
                     return
                 }
 
-                self.saveBudget(userID: user.uid, email: email, budget: budget)
+                user.getIDTokenForcingRefresh(true) { _, tokenError in
+                    DispatchQueue.main.async {
+                        if let tokenError {
+                            self.setSubmitting(false)
+                            self.showStatus("Account created, but session setup failed: \(tokenError.localizedDescription)", isError: true)
+                            return
+                        }
+
+                        self.saveBudget(userID: user.uid, email: email, budget: budget)
+                    }
+                }
             }
         }
     }
@@ -214,6 +224,12 @@ class ViewController: UIViewController {
                 self.setSubmitting(false)
 
                 if let error {
+                    let nsError = error as NSError
+                    if nsError.domain == FirestoreErrorDomain, nsError.code == 7 {
+                        self.showStatus("Account created, but budget save is blocked by Firestore rules/App Check. Enable signed-in writes for users/{uid} and register simulator App Check debug token.", isError: true)
+                        return
+                    }
+
                     self.showStatus("Account created, but budget sync failed: \(error.localizedDescription)", isError: true)
                     return
                 }
