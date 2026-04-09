@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24765" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="bvn-4a-dkA">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="bvn-4a-dkA">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24743"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -29,12 +30,16 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rYI-cH-9cm">
                                         <rect key="frame" x="0.0" y="0.0" width="166.66666666666666" height="34.333333333333336"/>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="tinted" title="Login"/>
+                                        <buttonConfiguration key="configuration" style="tinted" title="Login">
+                                            <color key="baseBackgroundColor" red="0.76862745099999996" green="0.37267031810000001" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        </buttonConfiguration>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6PJ-em-9lT">
                                         <rect key="frame" x="186.66666666666663" y="0.0" width="166.33333333333337" height="34.333333333333336"/>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="tinted" title="Sign Up"/>
+                                        <buttonConfiguration key="configuration" style="tinted" title="Sign Up">
+                                            <color key="baseBackgroundColor" red="0.76862745099999996" green="0.37267031810000001" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        </buttonConfiguration>
                                     </button>
                                 </subviews>
                                 <color key="tintColor" systemColor="systemIndigoColor"/>
@@ -69,18 +74,13 @@
                                 <rect key="frame" x="132" y="475" width="129" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="Sign Up"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Sign Up">
+                                    <color key="baseBackgroundColor" red="0.76862745099999996" green="0.47843137250000001" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                </buttonConfiguration>
                                 <connections>
                                     <segue destination="0Zc-bM-1Jo" kind="show" identifier="result" id="deh-Ii-O4s"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Status" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dzo-UV-q9u">
-                                <rect key="frame" x="20" y="518" width="353" height="164"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Please Enter your Income/Budget Below" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pQc-8z-eFd">
                                 <rect key="frame" x="20" y="353" width="353" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -94,9 +94,16 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="numberPad" keyboardAppearance="alert"/>
                             </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Status" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dzo-UV-q9u">
+                                <rect key="frame" x="12" y="532" width="353" height="164"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" red="0.90980392160000001" green="0.85098039219999999" blue="0.76470588240000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="kJP-eU-OXE" secondAttribute="trailing" constant="20" id="2Ly-Kv-fBL"/>
                             <constraint firstItem="kJP-eU-OXE" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="8gn-94-PZf"/>
@@ -352,7 +359,8 @@
                             </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="eL0-jG-Snd"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" red="0.90980392160000001" green="0.85098039219999999" blue="0.76470588240000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="tintColor" red="0.76862745099999996" green="0.47843137250000001" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstItem="eL0-jG-Snd" firstAttribute="trailing" secondItem="LWQ-wQ-IIH" secondAttribute="trailing" constant="20" id="50X-8g-loJ"/>
                             <constraint firstItem="eL0-jG-Snd" firstAttribute="trailing" secondItem="HFY-LK-bDO" secondAttribute="trailing" constant="20" id="7MG-oY-RTt"/>
@@ -420,6 +428,7 @@
                             </textField>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="g9P-BB-xlA">
                                 <rect key="frame" x="20" y="192" width="353" height="51"/>
+                                <color key="backgroundColor" red="0.99199999999999999" green="0.95599999999999996" blue="0.91800000000000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="2n7-g8-Cbe"/>
                                 </constraints>
@@ -427,6 +436,8 @@
                                     <segment title="Expense"/>
                                     <segment title="Income"/>
                                 </segments>
+                                <color key="tintColor" red="0.99199999999999999" green="0.95599999999999996" blue="0.91800000000000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="selectedSegmentTintColor" red="0.76862745099999996" green="0.47843137250000001" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             </segmentedControl>
                             <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="T0S-Fh-DKS">
                                 <rect key="frame" x="0.0" y="686" width="393" height="49"/>
@@ -434,6 +445,7 @@
                             </datePicker>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="C3n-5c-kJ2"/>
+                        <color key="backgroundColor" red="0.90980392160000001" green="0.85098039219999999" blue="0.76470588240000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstItem="9Zg-gz-RGO" firstAttribute="top" secondItem="g9P-BB-xlA" secondAttribute="bottom" constant="20" id="GSX-1w-Rde"/>
                             <constraint firstItem="orj-2M-sTC" firstAttribute="top" secondItem="NYv-dT-f5L" secondAttribute="bottom" constant="20" id="HOD-rv-Gc1"/>
@@ -529,22 +541,6 @@
                                     <action selector="notificationTapped:" destination="Rqp-kB-0uO" eventType="touchUpInside" id="6gZ-wj-it2"/>
                                 </connections>
                             </button>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" segmentControlStyle="plain" selectedSegmentIndex="1" translatesAutoresizingMaskIntoConstraints="NO" id="Cgb-v9-Vwr">
-                                <rect key="frame" x="24" y="235.33333333333334" width="345" height="37.000000000000028"/>
-                                <color key="backgroundColor" red="0.99199999999999999" green="0.95599999999999996" blue="0.91800000000000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="36" id="H01-hD-His"/>
-                                </constraints>
-                                <segments>
-                                    <segment title="Weekly"/>
-                                    <segment title="Monthly"/>
-                                    <segment title="Yearly"/>
-                                </segments>
-                                <color key="selectedSegmentTintColor" red="0.73725490199999999" green="0.43137254899999999" blue="0.13725490200000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <connections>
-                                    <action selector="periodChanged:" destination="Rqp-kB-0uO" eventType="valueChanged" id="HUZ-wX-hhM"/>
-                                </connections>
-                            </segmentedControl>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pc2-n9-YTb">
                                 <rect key="frame" x="24" y="289.33333333333331" width="30" height="30"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="28"/>
@@ -760,6 +756,22 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" segmentControlStyle="plain" selectedSegmentIndex="1" translatesAutoresizingMaskIntoConstraints="NO" id="Cgb-v9-Vwr">
+                                <rect key="frame" x="49" y="230" width="345" height="37.000000000000028"/>
+                                <color key="backgroundColor" red="0.99199999999999999" green="0.95599999999999996" blue="0.91800000000000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="36" id="H01-hD-His"/>
+                                </constraints>
+                                <segments>
+                                    <segment title="Weekly"/>
+                                    <segment title="Monthly"/>
+                                    <segment title="Yearly"/>
+                                </segments>
+                                <color key="selectedSegmentTintColor" red="0.73725490199999999" green="0.43137254899999999" blue="0.13725490200000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <connections>
+                                    <action selector="periodChanged:" destination="Rqp-kB-0uO" eventType="valueChanged" id="HUZ-wX-hhM"/>
+                                </connections>
+                            </segmentedControl>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Qui-2F-Bfm"/>
                         <color key="backgroundColor" red="0.90980392160000001" green="0.85098039219999999" blue="0.76470588240000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -828,7 +840,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemIndigoColor">
-            <color red="0.38039215686274508" green="0.33333333333333331" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.34509803919999998" green="0.33725490200000002" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
