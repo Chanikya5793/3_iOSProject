@@ -863,14 +863,22 @@
                         <nil key="title"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="barChartPlaceholderImageView" destination="Rm5-tW-KdK" id="Rwv-P5-Bg3"/>
+                        <outlet property="billsValueLabel" destination="SXq-ai-N7Z" id="68M-Su-9jB"/>
                         <outlet property="comparisonCardView" destination="eU6-E9-iMM" id="aEe-8Y-l2Z"/>
                         <outlet property="comparisonDetailLabel" destination="14N-JR-y4e" id="TOg-kh-4vF"/>
                         <outlet property="comparisonPercentageLabel" destination="Ko9-W9-Aic" id="ndG-zq-2kE"/>
+                        <outlet property="comparisonTrendImageView" destination="FeW-Pk-TDr" id="FRT-D3-v0w"/>
+                        <outlet property="foodValueLabel" destination="md6-zO-CvM" id="Idn-P9-2JX"/>
                         <outlet property="monthLabel" destination="wAg-Od-5XH" id="5Yz-QR-vyV"/>
                         <outlet property="overviewCardView" destination="ffj-yN-uaW" id="sPn-C3-4B8"/>
+                        <outlet property="pieChartPlaceholderImageView" destination="OPO-xf-CQW" id="oJ9-7m-97B"/>
                         <outlet property="periodSegmentedControl" destination="Cgb-v9-Vwr" id="7q6-ti-mpq"/>
                         <outlet property="savingsCardView" destination="dQ4-7I-R5M" id="wBs-1r-hFa"/>
+                        <outlet property="savingsMonthsLabel" destination="R4X-A3-bKG" id="kjF-a0-WOx"/>
+                        <outlet property="shoppingValueLabel" destination="Ngp-f3-dot" id="uZB-iA-QaM"/>
                         <outlet property="titleLabel" destination="3eo-RV-HHu" id="SFW-u9-fbz"/>
+                        <outlet property="travelValueLabel" destination="QKb-g2-6m9" id="n7k-RF-yaC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LsQ-dR-9k4" sceneMemberID="firstResponder"/>
