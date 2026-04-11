@@ -86,15 +86,6 @@ class AnalysisViewController: UIViewController {
         refreshAnalysis()
     }
 
-    @IBAction func backTapped(_ sender: UIButton) {
-        if let navigationController, navigationController.viewControllers.count > 1 {
-            navigationController.popViewController(animated: true)
-            return
-        }
-
-        tabBarController?.selectedIndex = 0
-    }
-
     @IBAction func notificationTapped(_ sender: UIButton) {
         guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
         UIApplication.shared.open(url)
