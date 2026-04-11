@@ -36,7 +36,7 @@ class DashboardViewController: UIViewController {
     }
 
     private let firestore = Firestore.firestore()
-    private let maxRecentItems = 6
+    private let recentActivityTextView = UITextView()
 
     private lazy var currencyFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
@@ -47,6 +47,7 @@ class DashboardViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureRecentActivityScroller()
         configureInitialUI()
     }
 
@@ -56,8 +57,7 @@ class DashboardViewController: UIViewController {
     }
 
     private func configureInitialUI() {
-        recentActivityLabel.numberOfLines = 0
-        recentActivityLabel.text = "Loading transactions..."
+        setRecentActivityText("Loading transactions...")
 
         totalBudgetLabel.numberOfLines = 2
 
@@ -82,7 +82,6 @@ class DashboardViewController: UIViewController {
         let transactionsQuery = userDocument
             .collection("transactions")
             .order(by: "date", descending: true)
-            .limit(to: 150)
 
         let group = DispatchGroup()
         var totalBudget = 0.0
@@ -135,7 +134,7 @@ class DashboardViewController: UIViewController {
 
         group.notify(queue: .main) {
             if let queryError {
-                self.recentActivityLabel.text = "Unable to load dashboard: \(queryError.localizedDescription)"
+                self.setRecentActivityText("Unable to load dashboard: \(queryError.localizedDescription)")
             }
 
             self.applyDashboard(totalBudget: totalBudget, transactions: transactions)
@@ -154,13 +153,12 @@ class DashboardViewController: UIViewController {
         travelProgressView.progress = 0
         billsProgressView.progress = 0
         shoppingProgressView.progress = 0
-        recentActivityLabel.text = "Please sign in to view dashboard data."
+        setRecentActivityText("Please sign in to view dashboard data.")
     }
 
     private func applyDashboard(totalBudget: Double, transactions: [Transaction]) {
-        // Budget is monthly, so scope dashboard metrics to the latest transaction month.
-        let referenceDate = transactions.map(\.date).max() ?? Date()
-        let monthTransactions = transactions.filter { currentMonthInterval(for: referenceDate).contains($0.date) }
+        // Keep cumulative stats until user explicitly resets in Settings.
+        let monthTransactions = transactions
 
         let expenses = monthTransactions.filter { $0.type == "expense" }
         let incomes = monthTransactions.filter { $0.type == "income" }
@@ -193,12 +191,7 @@ class DashboardViewController: UIViewController {
         billsProgressView.progress = progressValue(numerator: billsTotal, denominator: effectiveBudget)
         shoppingProgressView.progress = progressValue(numerator: shoppingTotal, denominator: effectiveBudget)
 
-        recentActivityLabel.text = buildRecentActivityText(from: monthTransactions)
-    }
-
-    private func currentMonthInterval(for referenceDate: Date) -> DateInterval {
-        Calendar.current.dateInterval(of: .month, for: referenceDate)
-            ?? DateInterval(start: referenceDate, duration: 30 * 24 * 60 * 60)
+        setRecentActivityText(buildRecentActivityText(from: monthTransactions))
     }
 
     private func categoryTotal(named category: String, in transactions: [Transaction]) -> Double {
@@ -208,7 +201,7 @@ class DashboardViewController: UIViewController {
     }
 
     private func buildRecentActivityText(from transactions: [Transaction]) -> String {
-        let latest = transactions.sorted { $0.date > $1.date }.prefix(maxRecentItems)
+        let latest = transactions.sorted { $0.date > $1.date }
         guard !latest.isEmpty else {
             return "No transactions yet. Add your first expense or income from Add Expense tab."
         }
@@ -223,6 +216,28 @@ class DashboardViewController: UIViewController {
             let noteText = item.notes.isEmpty ? "" : " - \(item.notes)"
             return "\(dateText) | \(item.category) | \(sign)\(formatCurrency(item.amount))\(noteText)"
         }.joined(separator: "\n")
+    }
+
+    private func configureRecentActivityScroller() {
+        recentActivityLabel.isHidden = true
+
+        recentActivityTextView.frame = recentActivityLabel.frame
+        recentActivityTextView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        recentActivityTextView.backgroundColor = .clear
+        recentActivityTextView.isEditable = false
+        recentActivityTextView.isSelectable = true
+        recentActivityTextView.isScrollEnabled = true
+        recentActivityTextView.showsVerticalScrollIndicator = true
+        recentActivityTextView.textContainerInset = .zero
+        recentActivityTextView.textContainer.lineFragmentPadding = 0
+        recentActivityTextView.font = UIFont.systemFont(ofSize: 17)
+        recentActivityTextView.textColor = .label
+
+        view.addSubview(recentActivityTextView)
+    }
+
+    private func setRecentActivityText(_ text: String) {
+        recentActivityTextView.text = text
     }
 
     private func formatCurrency(_ amount: Double) -> String {

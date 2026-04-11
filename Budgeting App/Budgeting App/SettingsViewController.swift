@@ -88,6 +88,16 @@ class SettingsViewController: UIViewController {
         return button
     }()
 
+    private let resetStatisticsButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.configuration = .filled()
+        button.configuration?.title = "Reset Statistics"
+        button.configuration?.baseBackgroundColor = UIColor.systemOrange.withAlphaComponent(0.9)
+        button.configuration?.baseForegroundColor = .white
+        return button
+    }()
+
     private let statusLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -118,6 +128,7 @@ class SettingsViewController: UIViewController {
         view.addSubview(titleLabel)
         view.addSubview(budgetCard)
         view.addSubview(notificationCard)
+        view.addSubview(resetStatisticsButton)
         view.addSubview(logoutButton)
         view.addSubview(statusLabel)
 
@@ -173,7 +184,12 @@ class SettingsViewController: UIViewController {
             notificationDetailLabel.trailingAnchor.constraint(equalTo: notificationCard.trailingAnchor, constant: -18),
             notificationDetailLabel.bottomAnchor.constraint(equalTo: notificationCard.bottomAnchor, constant: -18),
 
-            logoutButton.topAnchor.constraint(equalTo: notificationCard.bottomAnchor, constant: 24),
+            resetStatisticsButton.topAnchor.constraint(equalTo: notificationCard.bottomAnchor, constant: 16),
+            resetStatisticsButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
+            resetStatisticsButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
+            resetStatisticsButton.heightAnchor.constraint(equalToConstant: 48),
+
+            logoutButton.topAnchor.constraint(equalTo: resetStatisticsButton.bottomAnchor, constant: 12),
             logoutButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
             logoutButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
             logoutButton.heightAnchor.constraint(equalToConstant: 48),
@@ -187,6 +203,7 @@ class SettingsViewController: UIViewController {
     private func wireActions() {
         saveBudgetButton.addTarget(self, action: #selector(saveBudgetTapped), for: .touchUpInside)
         notificationSwitch.addTarget(self, action: #selector(notificationSwitchChanged), for: .valueChanged)
+        resetStatisticsButton.addTarget(self, action: #selector(resetStatisticsTapped), for: .touchUpInside)
         logoutButton.addTarget(self, action: #selector(logoutTapped), for: .touchUpInside)
     }
 
@@ -304,6 +321,96 @@ class SettingsViewController: UIViewController {
         } catch {
             statusLabel.textColor = .systemRed
             statusLabel.text = "Logout failed: \(error.localizedDescription)"
+        }
+    }
+
+    @objc private func resetStatisticsTapped() {
+        let alert = UIAlertController(
+            title: "Reset Statistics?",
+            message: "This will delete all income and expense transactions. This action cannot be undone.",
+            preferredStyle: .alert
+        )
+
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        alert.addAction(UIAlertAction(title: "Reset", style: .destructive) { [weak self] _ in
+            self?.performStatisticsReset()
+        })
+
+        present(alert, animated: true)
+    }
+
+    private func performStatisticsReset() {
+        guard let userID = Auth.auth().currentUser?.uid else {
+            statusLabel.textColor = .systemRed
+            statusLabel.text = "Please sign in first."
+            return
+        }
+
+        resetStatisticsButton.isEnabled = false
+        statusLabel.textColor = .secondaryLabel
+        statusLabel.text = "Resetting statistics..."
+
+        let transactionsRef = firestore
+            .collection("users")
+            .document(userID)
+            .collection("transactions")
+
+        transactionsRef.getDocuments { [weak self] snapshot, error in
+            guard let self else { return }
+
+            if let error {
+                DispatchQueue.main.async {
+                    self.resetStatisticsButton.isEnabled = true
+                    self.statusLabel.textColor = .systemRed
+                    self.statusLabel.text = "Reset failed: \(error.localizedDescription)"
+                }
+                return
+            }
+
+            let refs = (snapshot?.documents ?? []).map { $0.reference }
+            if refs.isEmpty {
+                DispatchQueue.main.async {
+                    self.resetStatisticsButton.isEnabled = true
+                    self.statusLabel.textColor = .secondaryLabel
+                    self.statusLabel.text = "No statistics to reset."
+                }
+                return
+            }
+
+            self.deleteTransactionsInBatches(refs, startIndex: 0)
+        }
+    }
+
+    private func deleteTransactionsInBatches(_ refs: [DocumentReference], startIndex: Int) {
+        if startIndex >= refs.count {
+            DispatchQueue.main.async {
+                self.resetStatisticsButton.isEnabled = true
+                self.statusLabel.textColor = .systemGreen
+                self.statusLabel.text = "Statistics reset successfully."
+            }
+            return
+        }
+
+        let batch = firestore.batch()
+        let endIndex = min(startIndex + 400, refs.count)
+
+        for index in startIndex..<endIndex {
+            batch.deleteDocument(refs[index])
+        }
+
+        batch.commit { [weak self] error in
+            guard let self else { return }
+
+            if let error {
+                DispatchQueue.main.async {
+                    self.resetStatisticsButton.isEnabled = true
+                    self.statusLabel.textColor = .systemRed
+                    self.statusLabel.text = "Reset failed: \(error.localizedDescription)"
+                }
+                return
+            }
+
+            self.deleteTransactionsInBatches(refs, startIndex: endIndex)
         }
     }
 
