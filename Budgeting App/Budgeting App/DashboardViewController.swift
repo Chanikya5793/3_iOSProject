@@ -59,6 +59,8 @@ class DashboardViewController: UIViewController {
         recentActivityLabel.numberOfLines = 0
         recentActivityLabel.text = "Loading transactions..."
 
+        totalBudgetLabel.numberOfLines = 2
+
         [overallProgressView, foodProgressView, travelProgressView, billsProgressView, shoppingProgressView]
             .forEach { $0?.progress = 0 }
 
@@ -156,13 +158,25 @@ class DashboardViewController: UIViewController {
     }
 
     private func applyDashboard(totalBudget: Double, transactions: [Transaction]) {
-        let expenses = transactions.filter { $0.type == "expense" }
-        let totalSpent = expenses.reduce(0) { $0 + $1.amount }
+        // Budget is monthly, so scope dashboard metrics to the latest transaction month.
+        let referenceDate = transactions.map(\.date).max() ?? Date()
+        let monthTransactions = transactions.filter { currentMonthInterval(for: referenceDate).contains($0.date) }
 
-        let spentPercentage = totalBudget > 0 ? (totalSpent / totalBudget) * 100 : 0
+        let expenses = monthTransactions.filter { $0.type == "expense" }
+        let incomes = monthTransactions.filter { $0.type == "income" }
+
+        let totalSpent = expenses.reduce(0) { $0 + $1.amount }
+        let totalIncome = incomes.reduce(0) { $0 + $1.amount }
+        let effectiveBudget = totalBudget + totalIncome
+
+        let spentPercentage = effectiveBudget > 0 ? (totalSpent / effectiveBudget) * 100 : 0
         spentPercentageLabel.text = "\(Int(round(spentPercentage)))%"
-        totalBudgetLabel.text = "Total Budget : \(formatCurrency(totalBudget))"
-        overallProgressView.progress = progressValue(numerator: totalSpent, denominator: totalBudget)
+        if totalIncome > 0 {
+            totalBudgetLabel.text = "Budget: \(formatCurrency(totalBudget))\nIncome: +\(formatCurrency(totalIncome))"
+        } else {
+            totalBudgetLabel.text = "Total Budget : \(formatCurrency(totalBudget))"
+        }
+        overallProgressView.progress = progressValue(numerator: totalSpent, denominator: effectiveBudget)
 
         let foodTotal = categoryTotal(named: "food", in: expenses)
         let travelTotal = categoryTotal(named: "travel", in: expenses)
@@ -174,12 +188,17 @@ class DashboardViewController: UIViewController {
         billsAmountLabel.text = formatCurrency(billsTotal)
         shoppingAmountLabel.text = formatCurrency(shoppingTotal)
 
-        foodProgressView.progress = progressValue(numerator: foodTotal, denominator: totalBudget)
-        travelProgressView.progress = progressValue(numerator: travelTotal, denominator: totalBudget)
-        billsProgressView.progress = progressValue(numerator: billsTotal, denominator: totalBudget)
-        shoppingProgressView.progress = progressValue(numerator: shoppingTotal, denominator: totalBudget)
+        foodProgressView.progress = progressValue(numerator: foodTotal, denominator: effectiveBudget)
+        travelProgressView.progress = progressValue(numerator: travelTotal, denominator: effectiveBudget)
+        billsProgressView.progress = progressValue(numerator: billsTotal, denominator: effectiveBudget)
+        shoppingProgressView.progress = progressValue(numerator: shoppingTotal, denominator: effectiveBudget)
 
-        recentActivityLabel.text = buildRecentActivityText(from: transactions)
+        recentActivityLabel.text = buildRecentActivityText(from: monthTransactions)
+    }
+
+    private func currentMonthInterval(for referenceDate: Date) -> DateInterval {
+        Calendar.current.dateInterval(of: .month, for: referenceDate)
+            ?? DateInterval(start: referenceDate, duration: 30 * 24 * 60 * 60)
     }
 
     private func categoryTotal(named category: String, in transactions: [Transaction]) -> Double {

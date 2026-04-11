@@ -21,14 +21,18 @@ class AnalysisViewController: UIViewController {
     @IBOutlet weak var billsValueLabel: UILabel!
     @IBOutlet weak var shoppingValueLabel: UILabel!
     @IBOutlet weak var savingsMonthsLabel: UILabel!
+    @IBOutlet weak var datePicker: UIDatePicker!
+    @IBOutlet weak var refreshButton: UIButton!
 
     private enum AnalysisPeriod: Int {
-        case weekly = 0
-        case monthly = 1
-        case yearly = 2
+        case daily = 0
+        case weekly = 1
+        case monthly = 2
+        case yearly = 3
 
         var shiftComponent: Calendar.Component {
             switch self {
+            case .daily: return .day
             case .weekly: return .weekOfYear
             case .monthly: return .month
             case .yearly: return .year
@@ -37,6 +41,7 @@ class AnalysisViewController: UIViewController {
 
         var previousPeriodDescription: String {
             switch self {
+            case .daily: return "yesterday"
             case .weekly: return "last week"
             case .monthly: return "last month"
             case .yearly: return "last year"
@@ -64,6 +69,10 @@ class AnalysisViewController: UIViewController {
     private let billsColor = UIColor(red: 0.73, green: 0.40, blue: 0.20, alpha: 1)
     private let shoppingColor = UIColor(red: 0.60, green: 0.29, blue: 0.16, alpha: 1)
 
+    private var isRefreshing = false
+    private var lastManualRefreshAt: Date?
+    private let refreshCooldown: TimeInterval = 10
+
     private lazy var currencyFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
@@ -75,10 +84,12 @@ class AnalysisViewController: UIViewController {
         super.viewDidLoad()
         configureCards()
         configureCharts()
+        configureFiltersAndRefresh()
         selectedDate = Date()
         periodSegmentedControl.selectedSegmentIndex = AnalysisPeriod.monthly.rawValue
+        datePicker.date = selectedDate
         applyEmptyState(message: "Loading analysis...")
-        loadTransactions()
+        loadTransactions(forceServer: false)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -93,6 +104,26 @@ class AnalysisViewController: UIViewController {
 
     @IBAction func periodChanged(_ sender: UISegmentedControl) {
         refreshAnalysis()
+    }
+
+    @IBAction func refreshTapped(_ sender: UIButton) {
+        let now = Date()
+        if let lastManualRefreshAt {
+            let elapsed = now.timeIntervalSince(lastManualRefreshAt)
+            if elapsed < refreshCooldown {
+                let remaining = Int(ceil(refreshCooldown - elapsed))
+                showPopup(title: "Please wait", message: "You can refresh again in \(remaining)s.")
+                return
+            }
+        }
+
+        guard !isRefreshing else {
+            showPopup(title: "Refresh in progress", message: "Analytics is already refreshing.")
+            return
+        }
+
+        lastManualRefreshAt = now
+        loadTransactions(forceServer: true)
     }
 
     @IBAction func previousMonthTapped(_ sender: UIButton) {
@@ -113,6 +144,26 @@ class AnalysisViewController: UIViewController {
             $0?.layer.masksToBounds = true
         }
         comparisonDetailLabel.numberOfLines = 2
+    }
+
+    private func configureFiltersAndRefresh() {
+        if periodSegmentedControl.numberOfSegments >= 4 {
+            periodSegmentedControl.setTitle("Daily", forSegmentAt: 0)
+            periodSegmentedControl.setTitle("Weekly", forSegmentAt: 1)
+            periodSegmentedControl.setTitle("Monthly", forSegmentAt: 2)
+            periodSegmentedControl.setTitle("Yearly", forSegmentAt: 3)
+        }
+
+        datePicker.datePickerMode = .date
+        if #available(iOS 13.4, *) {
+            datePicker.preferredDatePickerStyle = .compact
+        }
+        datePicker.addTarget(self, action: #selector(datePickerChanged(_:)), for: .valueChanged)
+    }
+
+    @objc private func datePickerChanged(_ sender: UIDatePicker) {
+        selectedDate = sender.date
+        refreshAnalysis()
     }
 
     private func configureCharts() {
@@ -141,22 +192,27 @@ class AnalysisViewController: UIViewController {
         ])
     }
 
-    private func loadTransactions() {
+    private func loadTransactions(forceServer: Bool) {
         guard let userID = Auth.auth().currentUser?.uid else {
             applyEmptyState(message: "Sign in to view analysis.")
             return
         }
 
-        firestore
+        setRefreshing(true)
+
+        let query = firestore
             .collection("users")
             .document(userID)
             .collection("transactions")
             .order(by: "date", descending: true)
             .limit(to: 500)
-            .getDocuments { [weak self] snapshot, error in
+
+        let completion: (QuerySnapshot?, Error?) -> Void = { [weak self] snapshot, error in
                 guard let self else { return }
 
                 DispatchQueue.main.async {
+                    self.setRefreshing(false)
+
                     if let error {
                         self.applyEmptyState(message: "Unable to load analysis: \(error.localizedDescription)")
                         return
@@ -185,6 +241,12 @@ class AnalysisViewController: UIViewController {
                     self.refreshAnalysis()
                 }
             }
+
+        if forceServer {
+            query.getDocuments(source: .server, completion: completion)
+        } else {
+            query.getDocuments(completion: completion)
+        }
     }
 
     private func shiftSelection(by value: Int) {
@@ -192,6 +254,7 @@ class AnalysisViewController: UIViewController {
             return
         }
         selectedDate = next
+        datePicker.date = next
         refreshAnalysis()
     }
 
@@ -214,6 +277,9 @@ class AnalysisViewController: UIViewController {
         let formatter = DateFormatter()
 
         switch currentPeriod {
+        case .daily:
+            formatter.dateStyle = .medium
+            monthLabel.text = formatter.string(from: selectedDate)
         case .weekly:
             let interval = interval(for: .weekly, at: selectedDate)
             let endDate = calendar.date(byAdding: .day, value: 6, to: interval.start) ?? interval.end
@@ -299,6 +365,8 @@ class AnalysisViewController: UIViewController {
 
     private func savingsTrendData() -> (values: [Double], labels: [String]) {
         switch currentPeriod {
+        case .daily:
+            return hourlySavingsTrend()
         case .weekly:
             return dailySavingsTrend()
         case .monthly:
@@ -306,6 +374,24 @@ class AnalysisViewController: UIViewController {
         case .yearly:
             return yearlySavingsTrend()
         }
+    }
+
+    private func hourlySavingsTrend() -> (values: [Double], labels: [String]) {
+        var values: [Double] = []
+        var labels: [String] = []
+        let formatter = DateFormatter()
+        formatter.dateFormat = "ha"
+
+        for offset in -6...0 {
+            guard let hour = calendar.date(byAdding: .hour, value: offset, to: selectedDate) else { continue }
+            let start = calendar.date(bySetting: .minute, value: 0, of: hour) ?? hour
+            let end = calendar.date(byAdding: .hour, value: 1, to: start) ?? start
+            let interval = DateInterval(start: start, end: end)
+            values.append(netSavings(in: interval))
+            labels.append(formatter.string(from: start))
+        }
+
+        return (values, labels)
     }
 
     private func dailySavingsTrend() -> (values: [Double], labels: [String]) {
@@ -369,6 +455,8 @@ class AnalysisViewController: UIViewController {
 
     private func interval(for period: AnalysisPeriod, at date: Date) -> DateInterval {
         switch period {
+        case .daily:
+            return calendar.dateInterval(of: .day, for: date) ?? DateInterval(start: date, duration: 24 * 60 * 60)
         case .weekly:
             return calendar.dateInterval(of: .weekOfYear, for: date) ?? DateInterval(start: date, duration: 7 * 24 * 60 * 60)
         case .monthly:
@@ -376,6 +464,17 @@ class AnalysisViewController: UIViewController {
         case .yearly:
             return calendar.dateInterval(of: .year, for: date) ?? DateInterval(start: date, duration: 365 * 24 * 60 * 60)
         }
+    }
+
+    private func setRefreshing(_ refreshing: Bool) {
+        isRefreshing = refreshing
+        refreshButton.isEnabled = !refreshing
+    }
+
+    private func showPopup(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
     }
 
     private func formattedBreakdown(amount: Double, total: Double) -> String {

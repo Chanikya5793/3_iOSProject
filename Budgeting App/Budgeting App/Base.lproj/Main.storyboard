@@ -62,7 +62,7 @@
                                     <action selector="primaryButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vP8-z9-RBC"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Please Enter your Income/Budget Below" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pQc-8z-eFd">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Please Enter your Income/Budget below:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pQc-8z-eFd">
                                 <rect key="frame" x="20" y="353" width="353" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -824,6 +824,9 @@
                                     <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="large" weight="black"/>
                                     <color key="baseForegroundColor" red="0.76862745099999996" green="0.47843137250000001" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 </buttonConfiguration>
+                                <connections>
+                                    <action selector="refreshTapped:" destination="Rqp-kB-0uO" eventType="touchUpInside" id="xZR-VY-3JQ"/>
+                                </connections>
                             </button>
                             <datePicker contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" translatesAutoresizingMaskIntoConstraints="NO" id="l2g-oG-e5K">
                                 <rect key="frame" x="55" y="239" width="72" height="25"/>
@@ -880,11 +883,13 @@
                         <outlet property="comparisonDetailLabel" destination="14N-JR-y4e" id="TOg-kh-4vF"/>
                         <outlet property="comparisonPercentageLabel" destination="Ko9-W9-Aic" id="ndG-zq-2kE"/>
                         <outlet property="comparisonTrendImageView" destination="FeW-Pk-TDr" id="FRT-D3-v0w"/>
+                        <outlet property="datePicker" destination="l2g-oG-e5K" id="gq4-M6-D7I"/>
                         <outlet property="foodValueLabel" destination="md6-zO-CvM" id="Idn-P9-2JX"/>
                         <outlet property="monthLabel" destination="wAg-Od-5XH" id="5Yz-QR-vyV"/>
                         <outlet property="overviewCardView" destination="ffj-yN-uaW" id="sPn-C3-4B8"/>
                         <outlet property="periodSegmentedControl" destination="Cgb-v9-Vwr" id="7q6-ti-mpq"/>
                         <outlet property="pieChartPlaceholderImageView" destination="OPO-xf-CQW" id="oJ9-7m-97B"/>
+                        <outlet property="refreshButton" destination="ZGj-f1-nOW" id="J7T-y9-jcf"/>
                         <outlet property="savingsCardView" destination="dQ4-7I-R5M" id="wBs-1r-hFa"/>
                         <outlet property="savingsMonthsLabel" destination="R4X-A3-bKG" id="kjF-a0-WOx"/>
                         <outlet property="shoppingValueLabel" destination="Ngp-f3-dot" id="uZB-iA-QaM"/>
