@@ -594,7 +594,7 @@
                                     <action selector="previousMonthTapped:" destination="Rqp-kB-0uO" eventType="touchUpInside" id="p5i-4n-KNr"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="April 2024" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wAg-Od-5XH">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="April 2024" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="wAg-Od-5XH">
                                 <rect key="frame" x="145" y="237.33333333333334" width="103" height="26.333333333333343"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="22"/>
                                 <color key="textColor" red="0.2784313725" green="0.18039215689999999" blue="0.1058823529" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -809,14 +809,14 @@
                                     <segment title="Weekly"/>
                                     <segment title="Monthly"/>
                                     <segment title="Yearly"/>
-                                    <segment title=""/>
+                                    <segment title="Daily"/>
                                 </segments>
                                 <color key="selectedSegmentTintColor" red="0.73725490199999999" green="0.43137254899999999" blue="0.13725490200000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <connections>
                                     <action selector="periodChanged:" destination="Rqp-kB-0uO" eventType="valueChanged" id="HUZ-wX-hhM"/>
                                 </connections>
                             </segmentedControl>
-                            <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZGj-f1-nOW">
+                            <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZGj-f1-nOW" userLabel="Refresh">
                                 <rect key="frame" x="24" y="131" width="57" height="34.333333333333343"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" imagePadding="0.0">
@@ -825,6 +825,13 @@
                                     <color key="baseForegroundColor" red="0.76862745099999996" green="0.47843137250000001" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 </buttonConfiguration>
                             </button>
+                            <datePicker contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" translatesAutoresizingMaskIntoConstraints="NO" id="l2g-oG-e5K">
+                                <rect key="frame" x="55" y="239" width="72" height="25"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="72" id="MXF-JG-gzO"/>
+                                    <constraint firstAttribute="height" constant="25" id="Zak-94-u9T"/>
+                                </constraints>
+                            </datePicker>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Qui-2F-Bfm"/>
                         <color key="backgroundColor" red="0.90980392160000001" green="0.85098039219999999" blue="0.76470588240000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -834,6 +841,7 @@
                             <constraint firstItem="Cgb-v9-Vwr" firstAttribute="leading" secondItem="Qui-2F-Bfm" secondAttribute="leading" constant="24" id="4ge-S5-5gt"/>
                             <constraint firstItem="Cgb-v9-Vwr" firstAttribute="top" secondItem="3eo-RV-HHu" secondAttribute="bottom" constant="20" id="7VB-KO-lhz"/>
                             <constraint firstItem="wAg-Od-5XH" firstAttribute="centerX" secondItem="6CC-fF-tD2" secondAttribute="centerX" id="8gA-4e-b0F"/>
+                            <constraint firstItem="wAg-Od-5XH" firstAttribute="leading" secondItem="l2g-oG-e5K" secondAttribute="trailing" constant="18" id="E0F-mg-hve"/>
                             <constraint firstItem="Qui-2F-Bfm" firstAttribute="trailing" secondItem="eU6-E9-iMM" secondAttribute="trailing" constant="24" id="EwC-dk-z5l"/>
                             <constraint firstItem="Qui-2F-Bfm" firstAttribute="trailing" secondItem="dQ4-7I-R5M" secondAttribute="trailing" constant="24" id="G6g-ca-QLr"/>
                             <constraint firstItem="3eo-RV-HHu" firstAttribute="top" secondItem="Qui-2F-Bfm" secondAttribute="top" constant="12" id="GO8-xH-YtM"/>
@@ -843,6 +851,7 @@
                             <constraint firstItem="Pc2-n9-YTb" firstAttribute="height" constant="30" id="TQe-hV-XoL"/>
                             <constraint firstItem="nLS-5c-qCr" firstAttribute="centerY" secondItem="3eo-RV-HHu" secondAttribute="centerY" id="aED-52-fu0"/>
                             <constraint firstItem="Qui-2F-Bfm" firstAttribute="trailing" secondItem="ffj-yN-uaW" secondAttribute="trailing" constant="24" id="dNc-0k-des"/>
+                            <constraint firstItem="l2g-oG-e5K" firstAttribute="top" secondItem="Cgb-v9-Vwr" secondAttribute="bottom" constant="21.670000000000002" id="dRo-20-g3M"/>
                             <constraint firstItem="3eo-RV-HHu" firstAttribute="centerX" secondItem="6CC-fF-tD2" secondAttribute="centerX" id="gPW-6D-U9z"/>
                             <constraint firstItem="Qui-2F-Bfm" firstAttribute="trailing" secondItem="8Qa-rM-aIh" secondAttribute="trailing" constant="24" id="ght-Mh-Gid"/>
                             <constraint firstItem="Pc2-n9-YTb" firstAttribute="top" secondItem="Cgb-v9-Vwr" secondAttribute="bottom" constant="18" id="hqM-nP-r40"/>
@@ -850,6 +859,7 @@
                             <constraint firstItem="Pc2-n9-YTb" firstAttribute="leading" secondItem="Qui-2F-Bfm" secondAttribute="leading" constant="24" id="irW-KF-0oa"/>
                             <constraint firstItem="dQ4-7I-R5M" firstAttribute="top" secondItem="eU6-E9-iMM" secondAttribute="bottom" constant="16" id="kVA-1U-4jw"/>
                             <constraint firstItem="eU6-E9-iMM" firstAttribute="top" secondItem="ffj-yN-uaW" secondAttribute="bottom" constant="16" id="lDS-9Y-OHW"/>
+                            <constraint firstItem="l2g-oG-e5K" firstAttribute="leading" secondItem="Pc2-n9-YTb" secondAttribute="trailing" constant="1" id="muN-eN-GeI"/>
                             <constraint firstItem="Qui-2F-Bfm" firstAttribute="trailing" secondItem="nLS-5c-qCr" secondAttribute="trailing" constant="24" id="nVn-Il-Idm"/>
                             <constraint firstItem="dQ4-7I-R5M" firstAttribute="leading" secondItem="Qui-2F-Bfm" secondAttribute="leading" constant="24" id="oMC-iD-oX1"/>
                             <constraint firstItem="Pc2-n9-YTb" firstAttribute="width" constant="30" id="ruP-v3-Vri"/>
