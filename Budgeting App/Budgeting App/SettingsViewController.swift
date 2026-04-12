@@ -327,7 +327,7 @@ class SettingsViewController: UIViewController {
     @objc private func resetStatisticsTapped() {
         let alert = UIAlertController(
             title: "Reset Statistics?",
-            message: "This will delete all income and expense transactions. This action cannot be undone.",
+            message: "This starts a new calculation period from now. Existing transactions will be kept.",
             preferredStyle: .alert
         )
 
@@ -350,67 +350,23 @@ class SettingsViewController: UIViewController {
         statusLabel.textColor = .secondaryLabel
         statusLabel.text = "Resetting statistics..."
 
-        let transactionsRef = firestore
-            .collection("users")
-            .document(userID)
-            .collection("transactions")
-
-        transactionsRef.getDocuments { [weak self] snapshot, error in
+        firestore.collection("users").document(userID).setData([
+            "statsResetAt": FieldValue.serverTimestamp(),
+            "updatedAt": FieldValue.serverTimestamp()
+        ], merge: true) { [weak self] error in
             guard let self else { return }
 
-            if let error {
-                DispatchQueue.main.async {
-                    self.resetStatisticsButton.isEnabled = true
-                    self.statusLabel.textColor = .systemRed
-                    self.statusLabel.text = "Reset failed: \(error.localizedDescription)"
-                }
-                return
-            }
-
-            let refs = (snapshot?.documents ?? []).map { $0.reference }
-            if refs.isEmpty {
-                DispatchQueue.main.async {
-                    self.resetStatisticsButton.isEnabled = true
-                    self.statusLabel.textColor = .secondaryLabel
-                    self.statusLabel.text = "No statistics to reset."
-                }
-                return
-            }
-
-            self.deleteTransactionsInBatches(refs, startIndex: 0)
-        }
-    }
-
-    private func deleteTransactionsInBatches(_ refs: [DocumentReference], startIndex: Int) {
-        if startIndex >= refs.count {
             DispatchQueue.main.async {
                 self.resetStatisticsButton.isEnabled = true
-                self.statusLabel.textColor = .systemGreen
-                self.statusLabel.text = "Statistics reset successfully."
-            }
-            return
-        }
-
-        let batch = firestore.batch()
-        let endIndex = min(startIndex + 400, refs.count)
-
-        for index in startIndex..<endIndex {
-            batch.deleteDocument(refs[index])
-        }
-
-        batch.commit { [weak self] error in
-            guard let self else { return }
-
-            if let error {
-                DispatchQueue.main.async {
-                    self.resetStatisticsButton.isEnabled = true
+                if let error {
                     self.statusLabel.textColor = .systemRed
                     self.statusLabel.text = "Reset failed: \(error.localizedDescription)"
+                    return
                 }
-                return
-            }
 
-            self.deleteTransactionsInBatches(refs, startIndex: endIndex)
+                self.statusLabel.textColor = .systemGreen
+                self.statusLabel.text = "Statistics period reset. Past transactions are preserved."
+            }
         }
     }
 

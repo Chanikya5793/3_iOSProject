@@ -85,6 +85,7 @@ class DashboardViewController: UIViewController {
 
         let group = DispatchGroup()
         var totalBudget = 0.0
+        var resetAtDate: Date?
         var transactions: [Transaction] = []
         var queryError: Error?
 
@@ -98,6 +99,9 @@ class DashboardViewController: UIViewController {
 
             guard let data = snapshot?.data() else { return }
             totalBudget = Self.readAmount(from: data["budget"])
+            if let timestamp = data["statsResetAt"] as? Timestamp {
+                resetAtDate = timestamp.dateValue()
+            }
         }
 
         group.enter()
@@ -137,7 +141,7 @@ class DashboardViewController: UIViewController {
                 self.setRecentActivityText("Unable to load dashboard: \(queryError.localizedDescription)")
             }
 
-            self.applyDashboard(totalBudget: totalBudget, transactions: transactions)
+            self.applyDashboard(totalBudget: totalBudget, transactions: transactions, resetAtDate: resetAtDate)
         }
     }
 
@@ -156,12 +160,17 @@ class DashboardViewController: UIViewController {
         setRecentActivityText("Please sign in to view dashboard data.")
     }
 
-    private func applyDashboard(totalBudget: Double, transactions: [Transaction]) {
-        // Keep cumulative stats until user explicitly resets in Settings.
-        let monthTransactions = transactions
+    private func applyDashboard(totalBudget: Double, transactions: [Transaction], resetAtDate: Date?) {
+        // Keep cumulative stats, but restart the period from the last reset timestamp.
+        let periodTransactions: [Transaction]
+        if let resetAtDate {
+            periodTransactions = transactions.filter { $0.date >= resetAtDate }
+        } else {
+            periodTransactions = transactions
+        }
 
-        let expenses = monthTransactions.filter { $0.type == "expense" }
-        let incomes = monthTransactions.filter { $0.type == "income" }
+        let expenses = periodTransactions.filter { $0.type == "expense" }
+        let incomes = periodTransactions.filter { $0.type == "income" }
 
         let totalSpent = expenses.reduce(0) { $0 + $1.amount }
         let totalIncome = incomes.reduce(0) { $0 + $1.amount }
@@ -191,7 +200,7 @@ class DashboardViewController: UIViewController {
         billsProgressView.progress = progressValue(numerator: billsTotal, denominator: effectiveBudget)
         shoppingProgressView.progress = progressValue(numerator: shoppingTotal, denominator: effectiveBudget)
 
-        setRecentActivityText(buildRecentActivityText(from: monthTransactions))
+        setRecentActivityText(buildRecentActivityText(from: periodTransactions))
     }
 
     private func categoryTotal(named category: String, in transactions: [Transaction]) -> Double {
