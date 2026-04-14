@@ -12,100 +12,23 @@ import UserNotifications
 
 class SettingsViewController: UIViewController {
 
+    @IBOutlet weak var titleLabel: UILabel!
+
+    @IBOutlet weak var budgetCard: UIView!
+    @IBOutlet weak var budgetTitleLabel: UILabel!
+    @IBOutlet weak var budgetTextField: UITextField!
+    @IBOutlet weak var saveBudgetButton: UIButton!
+
+    @IBOutlet weak var notificationCard: UIView!
+    @IBOutlet weak var notificationTitleLabel: UILabel!
+    @IBOutlet weak var notificationDetailLabel: UILabel!
+    @IBOutlet weak var notificationSwitch: UISwitch!
+
+    @IBOutlet weak var resetStatisticsButton: UIButton!
+    @IBOutlet weak var logoutButton: UIButton!
+    @IBOutlet weak var statusLabel: UILabel!
+
     private let firestore = Firestore.firestore()
-
-    private let titleLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .systemFont(ofSize: 34, weight: .bold)
-        label.text = "Settings"
-        label.textColor = UIColor(red: 0.16, green: 0.11, blue: 0.07, alpha: 1)
-        return label
-    }()
-
-    private let budgetCard = UIView()
-    private let budgetTitleLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Monthly Budget"
-        label.font = .systemFont(ofSize: 18, weight: .semibold)
-        return label
-    }()
-
-    private let budgetTextField: UITextField = {
-        let field = UITextField()
-        field.translatesAutoresizingMaskIntoConstraints = false
-        field.borderStyle = .roundedRect
-        field.placeholder = "Enter amount"
-        field.keyboardType = .decimalPad
-        field.autocorrectionType = .no
-        field.autocapitalizationType = .none
-        return field
-    }()
-
-    private let saveBudgetButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.configuration = .filled()
-        button.configuration?.title = "Update Budget"
-        button.configuration?.baseBackgroundColor = UIColor(red: 0.77, green: 0.48, blue: 0.27, alpha: 1)
-        button.configuration?.baseForegroundColor = .white
-        return button
-    }()
-
-    private let notificationCard = UIView()
-    private let notificationTitleLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Push Notifications"
-        label.font = .systemFont(ofSize: 18, weight: .semibold)
-        return label
-    }()
-
-    private let notificationDetailLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Get reminders and budgeting updates"
-        label.font = .systemFont(ofSize: 14, weight: .regular)
-        label.textColor = .secondaryLabel
-        return label
-    }()
-
-    private let notificationSwitch: UISwitch = {
-        let control = UISwitch()
-        control.translatesAutoresizingMaskIntoConstraints = false
-        control.onTintColor = UIColor(red: 0.77, green: 0.48, blue: 0.27, alpha: 1)
-        return control
-    }()
-
-    private let logoutButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.configuration = .filled()
-        button.configuration?.title = "Log Out"
-        button.configuration?.baseBackgroundColor = UIColor.systemRed.withAlphaComponent(0.9)
-        button.configuration?.baseForegroundColor = .white
-        return button
-    }()
-
-    private let resetStatisticsButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.configuration = .filled()
-        button.configuration?.title = "Reset Statistics"
-        button.configuration?.baseBackgroundColor = UIColor.systemOrange.withAlphaComponent(0.9)
-        button.configuration?.baseForegroundColor = .white
-        return button
-    }()
-
-    private let statusLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .systemFont(ofSize: 14, weight: .regular)
-        label.textColor = .secondaryLabel
-        label.numberOfLines = 0
-        return label
-    }()
 
     private lazy var currencyFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
@@ -116,88 +39,64 @@ class SettingsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        buildInterface()
+        configureInterfaceAppearance()
         wireActions()
         loadCurrentBudget()
         loadNotificationPreference()
     }
 
-    private func buildInterface() {
+    private func configureInterfaceAppearance() {
         view.backgroundColor = UIColor(red: 0.91, green: 0.85, blue: 0.76, alpha: 1)
 
-        view.addSubview(titleLabel)
-        view.addSubview(budgetCard)
-        view.addSubview(notificationCard)
-        view.addSubview(resetStatisticsButton)
-        view.addSubview(logoutButton)
-        view.addSubview(statusLabel)
+        titleLabel.font = .systemFont(ofSize: 34, weight: .bold)
+        titleLabel.text = "Settings"
+        titleLabel.textColor = UIColor(red: 0.16, green: 0.11, blue: 0.07, alpha: 1)
 
         [budgetCard, notificationCard].forEach {
-            $0.translatesAutoresizingMaskIntoConstraints = false
             $0.backgroundColor = UIColor(white: 1, alpha: 0.5)
             $0.layer.cornerRadius = 18
             $0.layer.masksToBounds = true
         }
 
-        budgetCard.addSubview(budgetTitleLabel)
-        budgetCard.addSubview(budgetTextField)
-        budgetCard.addSubview(saveBudgetButton)
+        budgetTitleLabel.text = "Monthly Budget"
+        budgetTitleLabel.font = .systemFont(ofSize: 18, weight: .semibold)
 
-        notificationCard.addSubview(notificationTitleLabel)
-        notificationCard.addSubview(notificationDetailLabel)
-        notificationCard.addSubview(notificationSwitch)
+        budgetTextField.borderStyle = .roundedRect
+        budgetTextField.placeholder = "Enter amount"
+        budgetTextField.keyboardType = .decimalPad
+        budgetTextField.autocorrectionType = .no
+        budgetTextField.autocapitalizationType = .none
 
-        NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
-            titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
+        var budgetConfig = UIButton.Configuration.filled()
+        budgetConfig.title = "Update Budget"
+        budgetConfig.baseBackgroundColor = UIColor(red: 0.77, green: 0.48, blue: 0.27, alpha: 1)
+        budgetConfig.baseForegroundColor = .white
+        saveBudgetButton.configuration = budgetConfig
 
-            budgetCard.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20),
-            budgetCard.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
-            budgetCard.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
+        notificationTitleLabel.text = "Push Notifications"
+        notificationTitleLabel.font = .systemFont(ofSize: 18, weight: .semibold)
 
-            budgetTitleLabel.topAnchor.constraint(equalTo: budgetCard.topAnchor, constant: 18),
-            budgetTitleLabel.leadingAnchor.constraint(equalTo: budgetCard.leadingAnchor, constant: 18),
-            budgetTitleLabel.trailingAnchor.constraint(equalTo: budgetCard.trailingAnchor, constant: -18),
+        notificationDetailLabel.text = "Get reminders and budgeting updates"
+        notificationDetailLabel.font = .systemFont(ofSize: 14, weight: .regular)
+        notificationDetailLabel.textColor = .secondaryLabel
 
-            budgetTextField.topAnchor.constraint(equalTo: budgetTitleLabel.bottomAnchor, constant: 12),
-            budgetTextField.leadingAnchor.constraint(equalTo: budgetCard.leadingAnchor, constant: 18),
-            budgetTextField.trailingAnchor.constraint(equalTo: budgetCard.trailingAnchor, constant: -18),
+        notificationSwitch.onTintColor = UIColor(red: 0.77, green: 0.48, blue: 0.27, alpha: 1)
 
-            saveBudgetButton.topAnchor.constraint(equalTo: budgetTextField.bottomAnchor, constant: 12),
-            saveBudgetButton.leadingAnchor.constraint(equalTo: budgetCard.leadingAnchor, constant: 18),
-            saveBudgetButton.trailingAnchor.constraint(equalTo: budgetCard.trailingAnchor, constant: -18),
-            saveBudgetButton.bottomAnchor.constraint(equalTo: budgetCard.bottomAnchor, constant: -18),
-            saveBudgetButton.heightAnchor.constraint(equalToConstant: 44),
+        var resetConfig = UIButton.Configuration.filled()
+        resetConfig.title = "Reset Statistics"
+        resetConfig.baseBackgroundColor = UIColor.systemOrange.withAlphaComponent(0.9)
+        resetConfig.baseForegroundColor = .white
+        resetStatisticsButton.configuration = resetConfig
 
-            notificationCard.topAnchor.constraint(equalTo: budgetCard.bottomAnchor, constant: 16),
-            notificationCard.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
-            notificationCard.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
+        var logoutConfig = UIButton.Configuration.filled()
+        logoutConfig.title = "Log Out"
+        logoutConfig.baseBackgroundColor = UIColor.systemRed.withAlphaComponent(0.9)
+        logoutConfig.baseForegroundColor = .white
+        logoutButton.configuration = logoutConfig
 
-            notificationTitleLabel.topAnchor.constraint(equalTo: notificationCard.topAnchor, constant: 18),
-            notificationTitleLabel.leadingAnchor.constraint(equalTo: notificationCard.leadingAnchor, constant: 18),
-
-            notificationSwitch.centerYAnchor.constraint(equalTo: notificationTitleLabel.centerYAnchor),
-            notificationSwitch.trailingAnchor.constraint(equalTo: notificationCard.trailingAnchor, constant: -18),
-
-            notificationDetailLabel.topAnchor.constraint(equalTo: notificationTitleLabel.bottomAnchor, constant: 8),
-            notificationDetailLabel.leadingAnchor.constraint(equalTo: notificationCard.leadingAnchor, constant: 18),
-            notificationDetailLabel.trailingAnchor.constraint(equalTo: notificationCard.trailingAnchor, constant: -18),
-            notificationDetailLabel.bottomAnchor.constraint(equalTo: notificationCard.bottomAnchor, constant: -18),
-
-            resetStatisticsButton.topAnchor.constraint(equalTo: notificationCard.bottomAnchor, constant: 16),
-            resetStatisticsButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
-            resetStatisticsButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
-            resetStatisticsButton.heightAnchor.constraint(equalToConstant: 48),
-
-            logoutButton.topAnchor.constraint(equalTo: resetStatisticsButton.bottomAnchor, constant: 12),
-            logoutButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
-            logoutButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
-            logoutButton.heightAnchor.constraint(equalToConstant: 48),
-
-            statusLabel.topAnchor.constraint(equalTo: logoutButton.bottomAnchor, constant: 14),
-            statusLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
-            statusLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24)
-        ])
+        statusLabel.font = .systemFont(ofSize: 14, weight: .regular)
+        statusLabel.textColor = .secondaryLabel
+        statusLabel.numberOfLines = 0
     }
 
     private func wireActions() {
