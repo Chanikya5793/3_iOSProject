@@ -31,6 +31,7 @@ class AddExpenseViewController: UIViewController {
     private let incomeCategories = ["Salary", "Bonus", "Other"]
     private var selectedCategory: String?
     private var isSaving = false
+    private let primaryButtonColor = UIColor(red: 0.77, green: 0.48, blue: 0.27, alpha: 1)
     
     private var currentEntryType: EntryType {
         typeSegment.selectedSegmentIndex == 0 ? .expense : .income
@@ -65,6 +66,17 @@ class AddExpenseViewController: UIViewController {
 
         categoryBTN.showsMenuAsPrimaryAction = true
         updateCategoryMenu(resetSelection: true)
+
+        configureDoneButtonAppearance()
+    }
+
+    private func configureDoneButtonAppearance() {
+        var config = doneButton.configuration ?? UIButton.Configuration.filled()
+        config.title = "Done"
+        config.baseBackgroundColor = primaryButtonColor
+        config.baseForegroundColor = .white
+        config.cornerStyle = .capsule
+        doneButton.configuration = config
     }
 
     private func updateCategoryMenu(resetSelection: Bool) {

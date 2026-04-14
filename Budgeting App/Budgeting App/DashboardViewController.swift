@@ -230,15 +230,17 @@ class DashboardViewController: UIViewController {
 
         recentActivityTextView.frame = recentActivityLabel.frame
         recentActivityTextView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        recentActivityTextView.backgroundColor = .clear
+        recentActivityTextView.backgroundColor = UIColor(red: 0.8117647059, green: 0.6549019608, blue: 0.4784313725, alpha: 1)
         recentActivityTextView.isEditable = false
         recentActivityTextView.isSelectable = true
         recentActivityTextView.isScrollEnabled = true
         recentActivityTextView.showsVerticalScrollIndicator = true
-        recentActivityTextView.textContainerInset = .zero
+        recentActivityTextView.layer.cornerRadius = 20
+        recentActivityTextView.layer.masksToBounds = true
+        recentActivityTextView.textContainerInset = UIEdgeInsets(top: 14, left: 14, bottom: 14, right: 14)
         recentActivityTextView.textContainer.lineFragmentPadding = 0
         recentActivityTextView.font = UIFont.systemFont(ofSize: 17)
-        recentActivityTextView.textColor = .label
+        recentActivityTextView.textColor = UIColor(red: 0.2078431373, green: 0.1411764706, blue: 0.0941176471, alpha: 1)
 
         view.addSubview(recentActivityTextView)
     }
