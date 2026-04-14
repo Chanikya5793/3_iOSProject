@@ -9,6 +9,7 @@ class AnalysisViewController: UIViewController {
     @IBOutlet weak var monthLabel: UILabel!
     @IBOutlet weak var overviewCardView: UIView!
     @IBOutlet weak var comparisonCardView: UIView!
+    @IBOutlet weak var comparisonTitleLabel: UILabel!
     @IBOutlet weak var comparisonPercentageLabel: UILabel!
     @IBOutlet weak var comparisonDetailLabel: UILabel!
     @IBOutlet weak var savingsCardView: UIView!
@@ -16,6 +17,10 @@ class AnalysisViewController: UIViewController {
     @IBOutlet weak var comparisonTrendImageView: UIImageView!
     @IBOutlet weak var pieChartPlaceholderImageView: UIImageView!
     @IBOutlet weak var barChartPlaceholderImageView: UIImageView!
+    @IBOutlet weak var foodCategoryLabel: UILabel!
+    @IBOutlet weak var travelCategoryLabel: UILabel!
+    @IBOutlet weak var billsCategoryLabel: UILabel!
+    @IBOutlet weak var shoppingCategoryLabel: UILabel!
     @IBOutlet weak var foodValueLabel: UILabel!
     @IBOutlet weak var travelValueLabel: UILabel!
     @IBOutlet weak var billsValueLabel: UILabel!
@@ -47,6 +52,15 @@ class AnalysisViewController: UIViewController {
             case .yearly: return "last year"
             }
         }
+
+        var comparisonTitle: String {
+            switch self {
+            case .daily: return "Compared to Yesterday"
+            case .weekly: return "Compared to Last Week"
+            case .monthly: return "Compared to Last Month"
+            case .yearly: return "Compared to Last Year"
+            }
+        }
     }
 
     private struct Transaction {
@@ -73,6 +87,23 @@ class AnalysisViewController: UIViewController {
     private var isRefreshing = false
     private var lastManualRefreshAt: Date?
     private let refreshCooldown: TimeInterval = 10
+    private var currentTrendValues: [Double] = []
+    private var currentTrendLabels: [String] = []
+    private var tooltipHideTask: DispatchWorkItem?
+
+    private let barTooltipLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = .systemFont(ofSize: 12, weight: .semibold)
+        label.textColor = .white
+        label.backgroundColor = UIColor(white: 0.15, alpha: 0.84)
+        label.layer.cornerRadius = 10
+        label.layer.masksToBounds = true
+        label.textAlignment = .center
+        label.numberOfLines = 2
+        label.isHidden = true
+        return label
+    }()
 
     private lazy var currencyFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
@@ -145,6 +176,14 @@ class AnalysisViewController: UIViewController {
             $0?.layer.masksToBounds = true
         }
         comparisonDetailLabel.numberOfLines = 2
+        configureCategoryLegendColors()
+    }
+
+    private func configureCategoryLegendColors() {
+        foodCategoryLabel.textColor = foodColor
+        travelCategoryLabel.textColor = travelColor
+        billsCategoryLabel.textColor = billsColor
+        shoppingCategoryLabel.textColor = shoppingColor
     }
 
     private func configureFiltersAndRefresh() {
@@ -170,6 +209,7 @@ class AnalysisViewController: UIViewController {
     private func configureCharts() {
         pieChartPlaceholderImageView.image = nil
         pieChartPlaceholderImageView.tintColor = .clear
+        pieChartPlaceholderImageView.isUserInteractionEnabled = false
 
         pieChartView.translatesAutoresizingMaskIntoConstraints = false
         pieChartPlaceholderImageView.addSubview(pieChartView)
@@ -182,6 +222,7 @@ class AnalysisViewController: UIViewController {
 
         barChartPlaceholderImageView.image = nil
         barChartPlaceholderImageView.tintColor = .clear
+        barChartPlaceholderImageView.isUserInteractionEnabled = true
 
         barChartView.translatesAutoresizingMaskIntoConstraints = false
         barChartPlaceholderImageView.addSubview(barChartView)
@@ -191,6 +232,87 @@ class AnalysisViewController: UIViewController {
             barChartView.topAnchor.constraint(equalTo: barChartPlaceholderImageView.topAnchor),
             barChartView.bottomAnchor.constraint(equalTo: barChartPlaceholderImageView.bottomAnchor)
         ])
+
+        configureBarChartInteractions()
+    }
+
+    private func configureBarChartInteractions() {
+        barChartView.isUserInteractionEnabled = true
+
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(barChartTapped(_:)))
+        barChartView.addGestureRecognizer(tapGesture)
+
+        if #available(iOS 13.4, *) {
+            let hoverGesture = UIHoverGestureRecognizer(target: self, action: #selector(barChartHovered(_:)))
+            barChartView.addGestureRecognizer(hoverGesture)
+        }
+
+        guard barTooltipLabel.superview == nil else { return }
+        savingsCardView.addSubview(barTooltipLabel)
+        NSLayoutConstraint.activate([
+            barTooltipLabel.topAnchor.constraint(equalTo: savingsCardView.topAnchor, constant: 10),
+            barTooltipLabel.trailingAnchor.constraint(equalTo: savingsCardView.trailingAnchor, constant: -10),
+            barTooltipLabel.widthAnchor.constraint(lessThanOrEqualToConstant: 190)
+        ])
+    }
+
+    @objc private func barChartTapped(_ gesture: UITapGestureRecognizer) {
+        let location = gesture.location(in: barChartView)
+        guard let index = barIndex(for: location) else { return }
+        showBarTooltip(for: index, autoHideAfter: 2.2)
+    }
+
+    @available(iOS 13.4, *)
+    @objc private func barChartHovered(_ gesture: UIHoverGestureRecognizer) {
+        switch gesture.state {
+        case .began, .changed:
+            let location = gesture.location(in: barChartView)
+            guard let index = barIndex(for: location) else { return }
+            showBarTooltip(for: index, autoHideAfter: nil)
+        default:
+            tooltipHideTask?.cancel()
+            barTooltipLabel.isHidden = true
+        }
+    }
+
+    private func barIndex(for point: CGPoint) -> Int? {
+        guard !currentTrendValues.isEmpty else { return nil }
+        guard barChartView.bounds.width > 0 else { return nil }
+
+        let slotWidth = barChartView.bounds.width / CGFloat(currentTrendValues.count)
+        guard slotWidth > 0 else { return nil }
+
+        var index = Int(floor(point.x / slotWidth))
+        index = max(0, min(currentTrendValues.count - 1, index))
+        return index
+    }
+
+    private func showBarTooltip(for index: Int, autoHideAfter delay: TimeInterval?) {
+        guard index >= 0, index < currentTrendValues.count, index < currentTrendLabels.count else { return }
+
+        let label = currentTrendLabels[index]
+        let value = currentTrendValues[index]
+        let summary: String
+
+        if value > 0 {
+            summary = "\(label): +\(formatCurrency(value)) saved"
+        } else if value < 0 {
+            summary = "\(label): -\(formatCurrency(abs(value))) overspent"
+        } else {
+            summary = "\(label): \(formatCurrency(0)) net"
+        }
+
+        barTooltipLabel.text = "  \(summary)  "
+        barTooltipLabel.isHidden = false
+
+        tooltipHideTask?.cancel()
+        guard let delay else { return }
+
+        let task = DispatchWorkItem { [weak self] in
+            self?.barTooltipLabel.isHidden = true
+        }
+        tooltipHideTask = task
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: task)
     }
 
     private func loadTransactions(forceServer: Bool) {
@@ -284,6 +406,7 @@ class AnalysisViewController: UIViewController {
     }
 
     private func refreshAnalysis() {
+        comparisonTitleLabel.text = currentPeriod.comparisonTitle
         updateMonthLabel()
 
         let currentInterval = interval(for: currentPeriod, at: selectedDate)
@@ -382,10 +505,16 @@ class AnalysisViewController: UIViewController {
 
     private func updateSavingsChart() {
         let trend = savingsTrendData()
+        currentTrendValues = trend.values
+        currentTrendLabels = trend.labels
         barChartView.values = trend.values
         barChartView.positiveColor = UIColor(red: 0.84, green: 0.64, blue: 0.17, alpha: 1)
         barChartView.negativeColor = UIColor.systemRed
         savingsMonthsLabel.text = trend.labels.joined(separator: "   ")
+
+        if trend.values.isEmpty {
+            barTooltipLabel.isHidden = true
+        }
     }
 
     private func savingsTrendData() -> (values: [Double], labels: [String]) {
@@ -515,6 +644,7 @@ class AnalysisViewController: UIViewController {
     }
 
     private func applyEmptyState(message: String) {
+        comparisonTitleLabel.text = currentPeriod.comparisonTitle
         comparisonTrendImageView.image = UIImage(systemName: "minus.circle.fill")
         comparisonTrendImageView.tintColor = .secondaryLabel
         comparisonPercentageLabel.text = "0%"
@@ -528,6 +658,9 @@ class AnalysisViewController: UIViewController {
 
         pieChartView.segments = []
         barChartView.values = []
+        currentTrendValues = []
+        currentTrendLabels = []
+        barTooltipLabel.isHidden = true
         savingsMonthsLabel.text = "-"
     }
 

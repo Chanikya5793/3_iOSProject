@@ -882,9 +882,12 @@
                         <outlet property="comparisonCardView" destination="eU6-E9-iMM" id="aEe-8Y-l2Z"/>
                         <outlet property="comparisonDetailLabel" destination="14N-JR-y4e" id="TOg-kh-4vF"/>
                         <outlet property="comparisonPercentageLabel" destination="Ko9-W9-Aic" id="ndG-zq-2kE"/>
+                        <outlet property="comparisonTitleLabel" destination="S4H-qI-gY3" id="TfQ-Bh-Q0P"/>
                         <outlet property="comparisonTrendImageView" destination="FeW-Pk-TDr" id="FRT-D3-v0w"/>
                         <outlet property="datePicker" destination="l2g-oG-e5K" id="gq4-M6-D7I"/>
+                        <outlet property="foodCategoryLabel" destination="jqh-5c-qOl" id="vMg-Uc-9EN"/>
                         <outlet property="foodValueLabel" destination="md6-zO-CvM" id="Idn-P9-2JX"/>
+                        <outlet property="billsCategoryLabel" destination="Rqq-wP-R2V" id="n4V-sy-2qS"/>
                         <outlet property="monthLabel" destination="wAg-Od-5XH" id="5Yz-QR-vyV"/>
                         <outlet property="overviewCardView" destination="ffj-yN-uaW" id="sPn-C3-4B8"/>
                         <outlet property="periodSegmentedControl" destination="Cgb-v9-Vwr" id="7q6-ti-mpq"/>
@@ -892,8 +895,10 @@
                         <outlet property="refreshButton" destination="ZGj-f1-nOW" id="J7T-y9-jcf"/>
                         <outlet property="savingsCardView" destination="dQ4-7I-R5M" id="wBs-1r-hFa"/>
                         <outlet property="savingsMonthsLabel" destination="R4X-A3-bKG" id="kjF-a0-WOx"/>
+                        <outlet property="shoppingCategoryLabel" destination="IAQ-2e-krx" id="DTL-vc-8Vv"/>
                         <outlet property="shoppingValueLabel" destination="Ngp-f3-dot" id="uZB-iA-QaM"/>
                         <outlet property="titleLabel" destination="3eo-RV-HHu" id="SFW-u9-fbz"/>
+                        <outlet property="travelCategoryLabel" destination="aVH-ue-4Su" id="uPb-h8-r7S"/>
                         <outlet property="travelValueLabel" destination="QKb-g2-6m9" id="n7k-RF-yaC"/>
                     </connections>
                 </viewController>
