@@ -97,6 +97,7 @@ class SettingsViewController: UIViewController {
         statusLabel.font = .systemFont(ofSize: 14, weight: .regular)
         statusLabel.textColor = .secondaryLabel
         statusLabel.numberOfLines = 0
+        setStatus(nil)
     }
 
     private func wireActions() {
@@ -108,7 +109,7 @@ class SettingsViewController: UIViewController {
 
     private func loadCurrentBudget() {
         guard let userID = Auth.auth().currentUser?.uid else {
-            statusLabel.text = "Not signed in."
+            setStatus("Not signed in.")
             return
         }
 
@@ -117,7 +118,7 @@ class SettingsViewController: UIViewController {
 
             DispatchQueue.main.async {
                 if let error {
-                    self.statusLabel.text = "Could not load budget: \(error.localizedDescription)"
+                    self.setStatus("Could not load budget: \(error.localizedDescription)", color: .systemRed)
                     return
                 }
 
@@ -147,12 +148,12 @@ class SettingsViewController: UIViewController {
 
     @objc private func saveBudgetTapped() {
         guard let userID = Auth.auth().currentUser?.uid else {
-            statusLabel.text = "Please sign in first."
+            setStatus("Please sign in first.", color: .systemRed)
             return
         }
 
         guard let value = parseBudget(from: budgetTextField.text), value > 0 else {
-            statusLabel.text = "Enter a valid budget greater than 0."
+            setStatus("Enter a valid budget greater than 0.", color: .systemRed)
             return
         }
 
@@ -168,14 +169,12 @@ class SettingsViewController: UIViewController {
                 self.saveBudgetButton.isEnabled = true
 
                 if let error {
-                    self.statusLabel.textColor = .systemRed
-                    self.statusLabel.text = "Budget update failed: \(error.localizedDescription)"
+                    self.setStatus("Budget update failed: \(error.localizedDescription)", color: .systemRed)
                     return
                 }
 
                 self.budgetTextField.text = self.currencyFormatter.string(from: NSNumber(value: value))
-                self.statusLabel.textColor = UIColor.systemGreen
-                self.statusLabel.text = "Budget updated successfully."
+                self.setStatus("Budget updated successfully.", color: .systemGreen)
             }
         }
     }
@@ -188,27 +187,23 @@ class SettingsViewController: UIViewController {
                 DispatchQueue.main.async {
                     if let error {
                         self.notificationSwitch.setOn(false, animated: true)
-                        self.statusLabel.textColor = .systemRed
-                        self.statusLabel.text = "Notification permission failed: \(error.localizedDescription)"
+                        self.setStatus("Notification permission failed: \(error.localizedDescription)", color: .systemRed)
                         self.persistNotificationPreference(enabled: false)
                         return
                     }
 
                     if granted {
-                        self.statusLabel.textColor = .systemGreen
-                        self.statusLabel.text = "Push notifications enabled."
+                        self.setStatus("Push notifications enabled.", color: .systemGreen)
                         self.persistNotificationPreference(enabled: true)
                     } else {
                         self.notificationSwitch.setOn(false, animated: true)
-                        self.statusLabel.textColor = .systemRed
-                        self.statusLabel.text = "Permission denied. Enable notifications in iOS Settings."
+                        self.setStatus("Permission denied. Enable notifications in iOS Settings.", color: .systemRed)
                         self.persistNotificationPreference(enabled: false)
                     }
                 }
             }
         } else {
-            statusLabel.textColor = .secondaryLabel
-            statusLabel.text = "Push notifications disabled for this account."
+            setStatus("Push notifications disabled for this account.")
             persistNotificationPreference(enabled: false)
         }
     }
@@ -218,8 +213,7 @@ class SettingsViewController: UIViewController {
             try Auth.auth().signOut()
             routeToLoginScreen()
         } catch {
-            statusLabel.textColor = .systemRed
-            statusLabel.text = "Logout failed: \(error.localizedDescription)"
+            setStatus("Logout failed: \(error.localizedDescription)", color: .systemRed)
         }
     }
 
@@ -240,14 +234,12 @@ class SettingsViewController: UIViewController {
 
     private func performStatisticsReset() {
         guard let userID = Auth.auth().currentUser?.uid else {
-            statusLabel.textColor = .systemRed
-            statusLabel.text = "Please sign in first."
+            setStatus("Please sign in first.", color: .systemRed)
             return
         }
 
         resetStatisticsButton.isEnabled = false
-        statusLabel.textColor = .secondaryLabel
-        statusLabel.text = "Resetting statistics..."
+        setStatus("Resetting statistics...")
 
         let resetNow = Date()
 
@@ -260,15 +252,20 @@ class SettingsViewController: UIViewController {
             DispatchQueue.main.async {
                 self.resetStatisticsButton.isEnabled = true
                 if let error {
-                    self.statusLabel.textColor = .systemRed
-                    self.statusLabel.text = "Reset failed: \(error.localizedDescription)"
+                    self.setStatus("Reset failed: \(error.localizedDescription)", color: .systemRed)
                     return
                 }
 
-                self.statusLabel.textColor = .systemGreen
-                self.statusLabel.text = "Statistics period reset. Past transactions are preserved."
+                self.setStatus("Statistics period reset. Past transactions are preserved.", color: .systemGreen)
             }
         }
+    }
+
+    private func setStatus(_ message: String?, color: UIColor = .secondaryLabel) {
+        let trimmed = message?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        statusLabel.textColor = color
+        statusLabel.text = trimmed
+        statusLabel.isHidden = trimmed.isEmpty
     }
 
     private func persistNotificationPreference(enabled: Bool) {

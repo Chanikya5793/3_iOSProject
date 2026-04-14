@@ -124,7 +124,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3590" y="-628"/>
+            <point key="canvasLocation" x="3161" y="-628"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="uRO-RX-kAs">
@@ -141,6 +141,7 @@
                     </tabBar>
                     <connections>
                         <segue destination="xHo-D9-c3k" kind="relationship" relationship="viewControllers" id="cau-sa-H9Q"/>
+                        <segue destination="ylh-Us-U7W" kind="relationship" relationship="viewControllers" id="Rg6-DN-SIa"/>
                         <segue destination="txe-uv-r8A" kind="relationship" relationship="viewControllers" id="D7U-vQ-eSs"/>
                         <segue destination="Rqp-kB-0uO" kind="relationship" relationship="viewControllers" id="rK3-Ac-M9t"/>
                         <segue destination="N8g-1m-XWN" kind="relationship" relationship="viewControllers" id="yYD-3S-IYE"/>
@@ -148,7 +149,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tLs-32-OS9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4720" y="-628"/>
+            <point key="canvasLocation" x="3978" y="-628"/>
         </scene>
         <!--Dashboard-->
         <scene sceneID="ODo-Vq-fo2">
@@ -413,7 +414,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PHy-PM-7ha" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2400.7633587786258" y="105.63380281690141"/>
+            <point key="canvasLocation" x="2326" y="106"/>
         </scene>
         <!--Add Expense-->
         <scene sceneID="fcF-i6-tzP">
@@ -484,7 +485,10 @@
                                 </constraints>
                                 <color key="tintColor" red="0.76862745099999996" green="0.47843137250000001" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="Done"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Done" cornerStyle="capsule">
+                                    <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="baseBackgroundColor" red="0.76862745099999996" green="0.47843137250000001" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                </buttonConfiguration>
                                 <connections>
                                     <action selector="saveTapped:" destination="txe-uv-r8A" eventType="touchUpInside" id="jPq-yE-o7r"/>
                                 </connections>
@@ -540,7 +544,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xsc-V2-pIi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3188.5496183206105" y="105.63380281690141"/>
+            <point key="canvasLocation" x="3978" y="106"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="b7g-sl-rhZ">
@@ -558,7 +562,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6PP-3Y-idg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2419" y="-628"/>
+            <point key="canvasLocation" x="2327" y="-628"/>
         </scene>
         <!--Analysis-->
         <scene sceneID="Xoa-AI-WD7">
@@ -878,6 +882,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="barChartPlaceholderImageView" destination="Rm5-tW-KdK" id="Rwv-P5-Bg3"/>
+                        <outlet property="billsCategoryLabel" destination="Rqq-wP-R2V" id="n4V-sy-2qS"/>
                         <outlet property="billsValueLabel" destination="SXq-ai-N7Z" id="68M-Su-9jB"/>
                         <outlet property="comparisonCardView" destination="eU6-E9-iMM" id="aEe-8Y-l2Z"/>
                         <outlet property="comparisonDetailLabel" destination="14N-JR-y4e" id="TOg-kh-4vF"/>
@@ -887,7 +892,6 @@
                         <outlet property="datePicker" destination="l2g-oG-e5K" id="gq4-M6-D7I"/>
                         <outlet property="foodCategoryLabel" destination="jqh-5c-qOl" id="vMg-Uc-9EN"/>
                         <outlet property="foodValueLabel" destination="md6-zO-CvM" id="Idn-P9-2JX"/>
-                        <outlet property="billsCategoryLabel" destination="Rqq-wP-R2V" id="n4V-sy-2qS"/>
                         <outlet property="monthLabel" destination="wAg-Od-5XH" id="5Yz-QR-vyV"/>
                         <outlet property="overviewCardView" destination="ffj-yN-uaW" id="sPn-C3-4B8"/>
                         <outlet property="periodSegmentedControl" destination="Cgb-v9-Vwr" id="7q6-ti-mpq"/>
@@ -904,7 +908,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LsQ-dR-9k4" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3977.8625954198474" y="105.63380281690141"/>
+            <point key="canvasLocation" x="4778" y="106"/>
         </scene>
         <!--Settings-->
         <scene sceneID="bXW-4r-Qyh">
@@ -915,29 +919,32 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Settings" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kaf-u2-2M5">
-                                <rect key="frame" x="24" y="75" width="145.66666666666666" height="41"/>
+                                <rect key="frame" x="24" y="134" width="133" height="41"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="34"/>
-                                <color key="textColor" red="0.16" green="0.11" blue="0.07" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="textColor" red="0.16" green="0.11" blue="0.070000000000000007" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uY6-9Q-jb1">
-                                <rect key="frame" x="24" y="136" width="345" height="190"/>
+                                <rect key="frame" x="24" y="195" width="345" height="150.33333333333337"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Monthly Budget" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0A1-gJ-8nb">
-                                        <rect key="frame" x="18" y="18" width="129" height="22"/>
+                                        <rect key="frame" x="18" y="18" width="309" height="22"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter amount" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hQ0-mS-T2a">
-                                        <rect key="frame" x="18" y="52" width="309" height="44"/>
+                                        <rect key="frame" x="18" y="52" width="309" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z5N-qw-x3k">
-                                        <rect key="frame" x="18" y="108" width="309" height="44"/>
+                                        <rect key="frame" x="18" y="98" width="309" height="34.333333333333343"/>
                                         <state key="normal" title="Update Budget"/>
-                                        <buttonConfiguration key="configuration" style="filled" title="Update Budget"/>
+                                        <buttonConfiguration key="configuration" style="filled" title="Update Budget">
+                                            <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="baseBackgroundColor" red="0.76862745099999996" green="0.47843137250000001" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        </buttonConfiguration>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -955,22 +962,22 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oT4-5x-nvN">
-                                <rect key="frame" x="24" y="342" width="345" height="120"/>
+                                <rect key="frame" x="24" y="361.33333333333331" width="345" height="83"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Push Notifications" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W9o-VX-zJf">
-                                        <rect key="frame" x="18" y="18" width="151" height="22"/>
+                                        <rect key="frame" x="18" y="18" width="153.33333333333334" height="22"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Get reminders and budgeting updates" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8mJ-r3-H9L">
-                                        <rect key="frame" x="18" y="48" width="309" height="34"/>
+                                        <rect key="frame" x="18" y="48" width="309" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="displayP3"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="2qU-jN-aem">
-                                        <rect key="frame" x="276" y="13" width="51" height="31"/>
+                                        <rect key="frame" x="266" y="15" width="63" height="28"/>
                                     </switch>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -986,17 +993,23 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Lt-jw-vqV">
-                                <rect key="frame" x="24" y="478" width="345" height="48"/>
+                                <rect key="frame" x="24" y="460.33333333333331" width="345" height="48"/>
                                 <state key="normal" title="Reset Statistics"/>
-                                <buttonConfiguration key="configuration" style="filled" title="Reset Statistics"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Reset Statistics">
+                                    <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="baseBackgroundColor" red="1" green="0.57647058819999997" blue="0.21960784310000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                </buttonConfiguration>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x7U-pj-G5k">
-                                <rect key="frame" x="24" y="538" width="345" height="48"/>
+                                <rect key="frame" x="24" y="520.33333333333337" width="345" height="48"/>
                                 <state key="normal" title="Log Out"/>
-                                <buttonConfiguration key="configuration" style="filled" title="Log Out"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Log Out">
+                                    <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="baseBackgroundColor" red="1" green="0.26274509800000001" blue="0.2784313725" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                </buttonConfiguration>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Status message" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xzW-4V-6tP">
-                                <rect key="frame" x="24" y="600" width="345" height="34"/>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xzW-4V-6tP">
+                                <rect key="frame" x="24" y="582.33333333333337" width="345" height="0.0"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="displayP3"/>
                                 <nil key="highlightedColor"/>
@@ -1045,7 +1058,23 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dAm-0X-0yO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4720" y="106"/>
+            <point key="canvasLocation" x="4779" y="-628"/>
+        </scene>
+        <!--Transactions-->
+        <scene sceneID="cT9-tR-1uw">
+            <objects>
+                <viewController id="ylh-Us-U7W" customClass="TransactionsViewController" customModule="Budgeting_App" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="LWd-zO-dF8">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="Ww7-Bm-Y72"/>
+                        <color key="backgroundColor" red="0.90980392160000001" green="0.85098039219999999" blue="0.76470588240000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Transactions" image="dollarsign.bank.building.fill" catalog="system" id="0fH-Fy-yuP"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="52K-2x-NCc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3160" y="106"/>
         </scene>
     </scenes>
     <resources>
@@ -1055,6 +1084,7 @@
         <image name="chart.bar.fill" catalog="system" width="128" height="90"/>
         <image name="chart.pie.fill" catalog="system" width="128" height="123"/>
         <image name="dollarsign" catalog="system" width="89" height="128"/>
+        <image name="dollarsign.bank.building.fill" catalog="system" width="128" height="112"/>
         <image name="fork.knife" catalog="system" width="94" height="128"/>
         <image name="gearshape.fill" catalog="system" width="128" height="123"/>
         <image name="handbag" catalog="system" width="128" height="116"/>
