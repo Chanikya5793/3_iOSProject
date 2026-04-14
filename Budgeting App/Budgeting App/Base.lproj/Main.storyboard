@@ -366,6 +366,16 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FmM-9k-Wc7" userLabel="Recent Activity Card">
+                                <rect key="frame" x="20" y="534" width="353" height="269"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.81176470590000005" green="0.65490196079999996" blue="0.47843137250000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <real key="value" value="20"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Transactions Here" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oor-An-T8N">
                                 <rect key="frame" x="20" y="534" width="353" height="269"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1067,10 +1077,133 @@
                     <view key="view" contentMode="scaleToFill" id="LWd-zO-dF8">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Transactions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mV9-a3-0L9">
+                                <rect key="frame" x="24" y="74" width="173" height="41"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="34"/>
+                                <color key="textColor" red="0.16" green="0.11" blue="0.070000000000000007" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bPx-bh-2a6">
+                                <rect key="frame" x="296" y="82" width="73" height="34"/>
+                                <state key="normal" title="Refresh"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                <color key="tintColor" red="0.76862745099999996" green="0.47843137250000001" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <connections>
+                                    <action selector="refreshTapped:" destination="ylh-Us-U7W" eventType="touchUpInside" id="S4A-oL-qjN"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LaP-2e-Xb2" userLabel="Filters Card">
+                                <rect key="frame" x="24" y="131" width="345" height="142"/>
+                                <subviews>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="m2X-N1-RRb">
+                                        <rect key="frame" x="16" y="16" width="313" height="34"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="32" id="hnd-Wj-07u"/>
+                                        </constraints>
+                                        <segments>
+                                            <segment title="All"/>
+                                            <segment title="Expense"/>
+                                            <segment title="Income"/>
+                                        </segments>
+                                        <color key="selectedSegmentTintColor" red="0.76862745099999996" green="0.47843137250000001" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <connections>
+                                            <action selector="typeFilterChanged:" destination="ylh-Us-U7W" eventType="valueChanged" id="dz8-4n-axt"/>
+                                        </connections>
+                                    </segmentedControl>
+                                    <button opaque="NO" contentMode="scaleToFill" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kNl-q2-zIl">
+                                        <rect key="frame" x="16" y="60" width="150" height="34"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="34" id="DXF-8s-QMD"/>
+                                        </constraints>
+                                        <state key="normal" title="All Categories"/>
+                                        <buttonConfiguration key="configuration" style="filled" title="All Categories">
+                                            <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="baseBackgroundColor" red="0.94117647059999995" green="0.90196078430000003" blue="0.84705882349999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        </buttonConfiguration>
+                                    </button>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search notes/category" clearButtonMode="whileEditing" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1AO-qK-qQ1">
+                                        <rect key="frame" x="16" y="102" width="313" height="34"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
+                                    </textField>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="kNl-q2-zIl" firstAttribute="leading" secondItem="LaP-2e-Xb2" secondAttribute="leading" constant="16" id="3v8-ZI-hhA"/>
+                                    <constraint firstItem="1AO-qK-qQ1" firstAttribute="leading" secondItem="LaP-2e-Xb2" secondAttribute="leading" constant="16" id="46N-Gz-zUg"/>
+                                    <constraint firstItem="m2X-N1-RRb" firstAttribute="leading" secondItem="LaP-2e-Xb2" secondAttribute="leading" constant="16" id="57E-hA-i6m"/>
+                                    <constraint firstItem="m2X-N1-RRb" firstAttribute="top" secondItem="LaP-2e-Xb2" secondAttribute="top" constant="16" id="7yv-wf-rqn"/>
+                                    <constraint firstItem="1AO-qK-qQ1" firstAttribute="top" secondItem="kNl-q2-zIl" secondAttribute="bottom" constant="8" id="7zY-9l-zgN"/>
+                                    <constraint firstAttribute="trailing" secondItem="m2X-N1-RRb" secondAttribute="trailing" constant="16" id="8MN-AI-vwt"/>
+                                    <constraint firstItem="kNl-q2-zIl" firstAttribute="top" secondItem="m2X-N1-RRb" secondAttribute="bottom" constant="10" id="Qzt-LR-2Nd"/>
+                                    <constraint firstAttribute="trailing" secondItem="1AO-qK-qQ1" secondAttribute="trailing" constant="16" id="fvf-Lu-pdf"/>
+                                    <constraint firstAttribute="bottom" secondItem="1AO-qK-qQ1" secondAttribute="bottom" constant="8" id="io1-lj-rEU"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <real key="value" value="20"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TqV-c3-iYr" userLabel="Transactions Card">
+                                <rect key="frame" x="24" y="289" width="345" height="466"/>
+                                <subviews>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="singleLine" rowHeight="60" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="sY8-QO-WNe">
+                                        <rect key="frame" x="0.0" y="0.0" width="345" height="466"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.25" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <color key="separatorColor" red="0.57647058819999997" green="0.45098039219999999" blue="0.32941176470000002" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="displayP3"/>
+                                    </tableView>
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No transactions found for current filters." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f1J-xX-SKd">
+                                        <rect key="frame" x="20" y="206" width="305" height="54"/>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                                        <color key="textColor" red="0.30196078429999999" green="0.22745098039999999" blue="0.15686274509999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="f1J-xX-SKd" firstAttribute="centerX" secondItem="TqV-c3-iYr" secondAttribute="centerX" id="1Q1-Lr-FvB"/>
+                                    <constraint firstItem="sY8-QO-WNe" firstAttribute="top" secondItem="TqV-c3-iYr" secondAttribute="top" id="9xy-Ar-PBa"/>
+                                    <constraint firstAttribute="trailing" secondItem="sY8-QO-WNe" secondAttribute="trailing" id="Ies-c8-TzS"/>
+                                    <constraint firstItem="f1J-xX-SKd" firstAttribute="centerY" secondItem="TqV-c3-iYr" secondAttribute="centerY" id="Le0-R9-UxI"/>
+                                    <constraint firstAttribute="bottom" secondItem="sY8-QO-WNe" secondAttribute="bottom" id="QZL-QI-JAQ"/>
+                                    <constraint firstItem="sY8-QO-WNe" firstAttribute="leading" secondItem="TqV-c3-iYr" secondAttribute="leading" id="et2-rv-W55"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <real key="value" value="20"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="Ww7-Bm-Y72"/>
                         <color key="backgroundColor" red="0.90980392160000001" green="0.85098039219999999" blue="0.76470588240000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <constraints>
+                            <constraint firstItem="bPx-bh-2a6" firstAttribute="centerY" secondItem="mV9-a3-0L9" secondAttribute="centerY" id="0A1-Px-prJ"/>
+                            <constraint firstItem="LaP-2e-Xb2" firstAttribute="leading" secondItem="Ww7-Bm-Y72" secondAttribute="leading" constant="24" id="6Vy-vw-0gV"/>
+                            <constraint firstItem="TqV-c3-iYr" firstAttribute="top" secondItem="LaP-2e-Xb2" secondAttribute="bottom" constant="16" id="7uG-4F-XM8"/>
+                            <constraint firstItem="TqV-c3-iYr" firstAttribute="leading" secondItem="Ww7-Bm-Y72" secondAttribute="leading" constant="24" id="9Aa-Xf-OS4"/>
+                            <constraint firstItem="LaP-2e-Xb2" firstAttribute="top" secondItem="mV9-a3-0L9" secondAttribute="bottom" constant="16" id="FNd-DY-iHO"/>
+                            <constraint firstItem="mV9-a3-0L9" firstAttribute="top" secondItem="Ww7-Bm-Y72" secondAttribute="top" constant="16" id="LOi-gn-AmO"/>
+                            <constraint firstItem="mV9-a3-0L9" firstAttribute="leading" secondItem="Ww7-Bm-Y72" secondAttribute="leading" constant="24" id="NNN-zN-WPr"/>
+                            <constraint firstItem="Ww7-Bm-Y72" firstAttribute="trailing" secondItem="LaP-2e-Xb2" secondAttribute="trailing" constant="24" id="TEl-7w-Y9e"/>
+                            <constraint firstItem="Ww7-Bm-Y72" firstAttribute="trailing" secondItem="TqV-c3-iYr" secondAttribute="trailing" constant="24" id="W6G-O8-LIH"/>
+                            <constraint firstItem="Ww7-Bm-Y72" firstAttribute="trailing" secondItem="bPx-bh-2a6" secondAttribute="trailing" constant="24" id="nGT-7a-JSQ"/>
+                            <constraint firstAttribute="bottom" secondItem="TqV-c3-iYr" secondAttribute="bottom" constant="14" id="sE4-jA-b4h"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Transactions" image="dollarsign.bank.building.fill" catalog="system" id="0fH-Fy-yuP"/>
+                    <connections>
+                        <outlet property="categoryFilterButton" destination="kNl-q2-zIl" id="CC1-FW-FMT"/>
+                        <outlet property="emptyStateLabel" destination="f1J-xX-SKd" id="9uB-zQ-2Pz"/>
+                        <outlet property="filterCardView" destination="LaP-2e-Xb2" id="5bk-pR-HbB"/>
+                        <outlet property="listCardView" destination="TqV-c3-iYr" id="rHU-SN-ZOB"/>
+                        <outlet property="refreshButton" destination="bPx-bh-2a6" id="44l-Ha-eQe"/>
+                        <outlet property="searchTextField" destination="1AO-qK-qQ1" id="HnI-E3-zO2"/>
+                        <outlet property="titleLabel" destination="mV9-a3-0L9" id="M0y-rj-gSQ"/>
+                        <outlet property="transactionsTableView" destination="sY8-QO-WNe" id="HXt-kq-Prc"/>
+                        <outlet property="typeSegmentedControl" destination="m2X-N1-RRb" id="J6Y-Tm-fPv"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="52K-2x-NCc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
