@@ -350,8 +350,10 @@ class SettingsViewController: UIViewController {
         statusLabel.textColor = .secondaryLabel
         statusLabel.text = "Resetting statistics..."
 
+        let resetNow = Date()
+
         firestore.collection("users").document(userID).setData([
-            "statsResetAt": FieldValue.serverTimestamp(),
+            "statsResetAt": resetNow,
             "updatedAt": FieldValue.serverTimestamp()
         ], merge: true) { [weak self] error in
             guard let self else { return }

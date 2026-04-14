@@ -99,9 +99,7 @@ class DashboardViewController: UIViewController {
 
             guard let data = snapshot?.data() else { return }
             totalBudget = Self.readAmount(from: data["budget"])
-            if let timestamp = data["statsResetAt"] as? Timestamp {
-                resetAtDate = timestamp.dateValue()
-            }
+            resetAtDate = Self.readDate(from: data["statsResetAt"])
         }
 
         group.enter()
@@ -270,6 +268,16 @@ class DashboardViewController: UIViewController {
             return value.doubleValue
         }
         return 0
+    }
+
+    private static func readDate(from rawValue: Any?) -> Date? {
+        if let timestamp = rawValue as? Timestamp {
+            return timestamp.dateValue()
+        }
+        if let date = rawValue as? Date {
+            return date
+        }
+        return nil
     }
 
 }

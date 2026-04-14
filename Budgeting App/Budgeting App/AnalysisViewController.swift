@@ -60,6 +60,7 @@ class AnalysisViewController: UIViewController {
     private let calendar = Calendar.current
     private var selectedDate = Date()
     private var transactions: [Transaction] = []
+    private var statsResetAt: Date?
 
     private let pieChartView = PieChartView()
     private let barChartView = BarChartView()
@@ -200,14 +201,20 @@ class AnalysisViewController: UIViewController {
 
         setRefreshing(true)
 
-        let query = firestore
+        let userDocument = firestore
             .collection("users")
             .document(userID)
-            .collection("transactions")
-            .order(by: "date", descending: true)
-            .limit(to: 500)
 
-        let completion: (QuerySnapshot?, Error?) -> Void = { [weak self] snapshot, error in
+        let fetchTransactions: () -> Void = { [weak self] in
+            guard let self else { return }
+
+            let query = self.firestore
+                .collection("users")
+                .document(userID)
+                .collection("transactions")
+                .order(by: "date", descending: true)
+
+            let completion: (QuerySnapshot?, Error?) -> Void = { [weak self] snapshot, error in
                 guard let self else { return }
 
                 DispatchQueue.main.async {
@@ -230,11 +237,16 @@ class AnalysisViewController: UIViewController {
                             ?? (data["createdAt"] as? Timestamp)
                             ?? Timestamp(date: .distantPast)
 
+                        let transactionDate = timestamp.dateValue()
+                        if let statsResetAt = self.statsResetAt, transactionDate < statsResetAt {
+                            return nil
+                        }
+
                         return Transaction(
                             type: type,
                             category: category,
                             amount: amount,
-                            date: timestamp.dateValue()
+                            date: transactionDate
                         )
                     }
 
@@ -242,10 +254,23 @@ class AnalysisViewController: UIViewController {
                 }
             }
 
+            if forceServer {
+                query.getDocuments(source: .server, completion: completion)
+            } else {
+                query.getDocuments(completion: completion)
+            }
+        }
+
+        let userCompletion: (DocumentSnapshot?, Error?) -> Void = { [weak self] snapshot, _ in
+            guard let self else { return }
+            self.statsResetAt = Self.readDate(from: snapshot?.data()?["statsResetAt"])
+            fetchTransactions()
+        }
+
         if forceServer {
-            query.getDocuments(source: .server, completion: completion)
+            userDocument.getDocument(source: .server, completion: userCompletion)
         } else {
-            query.getDocuments(completion: completion)
+            userDocument.getDocument(completion: userCompletion)
         }
     }
 
@@ -521,5 +546,15 @@ class AnalysisViewController: UIViewController {
             return value.doubleValue
         }
         return 0
+    }
+
+    private static func readDate(from rawValue: Any?) -> Date? {
+        if let timestamp = rawValue as? Timestamp {
+            return timestamp.dateValue()
+        }
+        if let date = rawValue as? Date {
+            return date
+        }
+        return nil
     }
 }
