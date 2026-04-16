@@ -29,6 +29,7 @@ class SettingsViewController: UIViewController {
     @IBOutlet weak var statusLabel: UILabel!
 
     private let firestore = Firestore.firestore()
+    private let defaultAccentColor = UIColor(red: 0.77, green: 0.48, blue: 0.27, alpha: 1)
 
     private lazy var currencyFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
@@ -67,11 +68,11 @@ class SettingsViewController: UIViewController {
         budgetTextField.autocorrectionType = .no
         budgetTextField.autocapitalizationType = .none
 
-        var budgetConfig = UIButton.Configuration.filled()
-        budgetConfig.title = "Update Budget"
-        budgetConfig.baseBackgroundColor = UIColor(red: 0.77, green: 0.48, blue: 0.27, alpha: 1)
-        budgetConfig.baseForegroundColor = .white
-        saveBudgetButton.configuration = budgetConfig
+        applyFilledButtonFallback(
+            saveBudgetButton,
+            title: "Update Budget",
+            fallbackBackground: defaultAccentColor
+        )
 
         notificationTitleLabel.text = "Push Notifications"
         notificationTitleLabel.font = .systemFont(ofSize: 18, weight: .semibold)
@@ -80,24 +81,38 @@ class SettingsViewController: UIViewController {
         notificationDetailLabel.font = .systemFont(ofSize: 14, weight: .regular)
         notificationDetailLabel.textColor = .secondaryLabel
 
-        notificationSwitch.onTintColor = UIColor(red: 0.77, green: 0.48, blue: 0.27, alpha: 1)
+        notificationSwitch.onTintColor = defaultAccentColor
 
-        var resetConfig = UIButton.Configuration.filled()
-        resetConfig.title = "Reset Statistics"
-        resetConfig.baseBackgroundColor = UIColor.systemOrange.withAlphaComponent(0.9)
-        resetConfig.baseForegroundColor = .white
-        resetStatisticsButton.configuration = resetConfig
+        applyFilledButtonFallback(
+            resetStatisticsButton,
+            title: "Reset Statistics",
+            fallbackBackground: UIColor.systemOrange.withAlphaComponent(0.9)
+        )
 
-        var logoutConfig = UIButton.Configuration.filled()
-        logoutConfig.title = "Log Out"
-        logoutConfig.baseBackgroundColor = UIColor.systemRed.withAlphaComponent(0.9)
-        logoutConfig.baseForegroundColor = .white
-        logoutButton.configuration = logoutConfig
+        applyFilledButtonFallback(
+            logoutButton,
+            title: "Log Out",
+            fallbackBackground: UIColor.systemRed.withAlphaComponent(0.9)
+        )
 
         statusLabel.font = .systemFont(ofSize: 14, weight: .regular)
         statusLabel.textColor = .secondaryLabel
         statusLabel.numberOfLines = 0
         setStatus(nil)
+    }
+
+    private func applyFilledButtonFallback(_ button: UIButton, title: String, fallbackBackground: UIColor) {
+        var config = button.configuration ?? UIButton.Configuration.filled()
+        if config.title == nil || config.title?.isEmpty == true {
+            config.title = title
+        }
+        if config.baseBackgroundColor == nil {
+            config.baseBackgroundColor = fallbackBackground
+        }
+        if config.baseForegroundColor == nil {
+            config.baseForegroundColor = .white
+        }
+        button.configuration = config
     }
 
     private func wireActions() {

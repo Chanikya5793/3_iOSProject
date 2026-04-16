@@ -109,6 +109,21 @@ class TransactionsViewController: UIViewController {
         searchTextField.autocorrectionType = .no
         searchTextField.spellCheckingType = .no
         searchTextField.clearButtonMode = .whileEditing
+        searchTextField.borderStyle = .none
+        searchTextField.layer.cornerRadius = 16
+        searchTextField.layer.masksToBounds = true
+        searchTextField.backgroundColor = UIColor(red: 0.94, green: 0.90, blue: 0.85, alpha: 1)
+        searchTextField.textColor = UIColor(red: 0.20, green: 0.14, blue: 0.09, alpha: 1)
+
+        let placeholderColor = UIColor(red: 0.35, green: 0.27, blue: 0.19, alpha: 0.65)
+        searchTextField.attributedPlaceholder = NSAttributedString(
+            string: "Search notes/category",
+            attributes: [.foregroundColor: placeholderColor]
+        )
+
+        let leadingSpacer = UIView(frame: CGRect(x: 0, y: 0, width: 12, height: 34))
+        searchTextField.leftView = leadingSpacer
+        searchTextField.leftViewMode = .always
         searchTextField.addTarget(self, action: #selector(searchTextChanged(_:)), for: .editingChanged)
 
         refreshButton.setTitleColor(accentColor, for: .normal)
